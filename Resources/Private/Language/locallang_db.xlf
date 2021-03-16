@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file>
+		<header>
+			<description>Language Labels for EXT:backendpreviews</description>
+			<authorName>David Steeb</authorName>
+			<authorEmail>typo3@b13.com</authorEmail>
+		</header>
+		<body>
+			<trans-unit id="CType.label" resname="CType.label">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="link.label" resname="link.label">
+				<source>Link</source>
+			</trans-unit>
+			<trans-unit id="link.config" resname="link.config">
+				<source>Type</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

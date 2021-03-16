@@ -1,0 +1,34 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+<f:comment>
+	<!--
+		A full element preview body.
+		We render the CType identifier in case there is no "Type" given in the element preview template.
+		If there is a "Type" section, we render the value instead, while formatting the section with "b_title".
+		If there is a "Fulltype" section in the element template, no rendering takes place for the title at all (use this to
+		remove the title including the line break completely, or for your own rendering).
+	-->
+</f:comment>
+
+<a href="{editLink.url}" title="{editLink.title}">
+	<f:render section="Fulltype" optional="true">
+		<span class="b_title">
+			<f:render section="Type" optional="true">
+				{f:translate(key: 'LLL:EXT:backendpreviews/Resource/Private/Language/locallang_db.xlf:CType.label')}: {CType -> f:format.case(mode: 'capital')}
+			</f:render>
+		</span><br>
+	</f:render>
+	<f:render section="Subheader" optional="true">
+		<f:if condition="{subheader}"><span class="b_subheader">{subheader}</span><br></f:if>
+	</f:render>
+	<f:render section="Fullmain" optional="true">
+		<div class="b_content">
+			<f:render section="Main"/>
+		</div>
+	</f:render>
+</a>
+
+</html>
+

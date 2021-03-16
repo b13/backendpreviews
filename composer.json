@@ -1,0 +1,15 @@
+{
+	"name": "b13/backendpreviews",
+	"type": "typo3-cms-extension",
+	"description": "Enhanced Fluid based backend element previews",
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "backendpreviews"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"B13\\Backendpreviews\\": "Classes/"
+		}
+	}
+}

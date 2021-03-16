@@ -1,0 +1,11 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<span class="b_label">{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.label')}: </span>{linklabel} ({f:uri.typolink(parameter: link)})
+<f:if condition="{config}">
+	[{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.config')}: {config}]
+</f:if>
+
+</html>
