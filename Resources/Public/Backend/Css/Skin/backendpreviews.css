@@ -22,3 +22,16 @@
 .b_image--hidden {
 	opacity: 0.5;
 }
+
+.b_tiles {
+	width: 300px;
+	display: inline-block;
+}
+
+.b_tiles--small {
+	width: 200px;
+}
+
+.b_tiles--big {
+	width: 450px;
+}
