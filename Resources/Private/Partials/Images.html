@@ -4,7 +4,7 @@
 >
 
 <f:for each="{images}" as="image">
-	<f:render partial="Media/Image" arguments="{image: image}" />
+	<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
 </f:for>
 
 </html>
