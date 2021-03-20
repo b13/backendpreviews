@@ -1,5 +1,10 @@
 :root {
 	--color-muted: #d0d0d0;
+	--spacing-image: 10px;
+	--tiles-width-default: 300px;
+	--tiles-width-small: 200px;
+	--tiles-width-big: 450x;
+	--opacity-hidden: 0.5;
 }
 
 .b_title {
@@ -19,25 +24,25 @@
 }
 
 .b_image {
-	margin-inline-end: 10px;
-	margin-top: 10px;
+	margin-inline-end: var(--spacing-image);
+	margin-top: var(--spacing-image);
 }
 
 .b_image--hidden {
-	opacity: 0.5;
+	opacity: var(--opacity-hidden);
 }
 
 .b_tiles {
-	width: 300px;
+	width: var(--tiles-width-default);
 	display: inline-block;
 }
 
 .b_tiles--small {
-	width: 200px;
+	width: var(--tiles-width-small);
 }
 
 .b_tiles--big {
-	width: 450px;
+	width: var(--tiles-width-big);
 }
 
 .b_html {
