@@ -1,3 +1,7 @@
+:root {
+	--color-muted: #d0d0d0;
+}
+
 .b_title {
 	font-weight: bold;
 }
@@ -34,4 +38,8 @@
 
 .b_tiles--big {
 	width: 450px;
+}
+
+.b_html {
+	color: var(--color-muted);
 }

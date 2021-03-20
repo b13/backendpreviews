@@ -1,0 +1,12 @@
+<html
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{text}">
+    <div class="b_html">
+        {text -> f:format.htmlspecialchars() -> f:format.nl2br()}
+    </div>
+</f:if>
+
+</html>
