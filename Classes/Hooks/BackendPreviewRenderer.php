@@ -90,6 +90,10 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
             $row['editLink'] = $return;
         }
 
+        $row['CType-label'] = $this->getLanguageService()->sL(
+            BackendUtility::getLabelFromItemListMerged($row['pid'], 'tt_content', 'CType', $row['CType'])
+        );
+
         // return all sys_file_reference rows
         if ($row['assets']) {
             $row['allAssets'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets', 'tt_content', $row['uid']);

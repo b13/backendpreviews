@@ -5,7 +5,7 @@
 <f:comment>
 	<!--
 		A full element preview body, including links.
-		We render the CType identifier in case there is no "Type" given in the element preview template.
+		We render the CType label (if found) or the CType identifier in case there is no "Type" given in the element preview template.
 		If there is a "Type" section, we render the value instead, while formatting the section with "b_title".
 		If there is a "Fulltype" section in the element template, no rendering takes place for the title at all (use this to
 		remove the title including the line break completely, or for your own rendering).
@@ -16,7 +16,7 @@
 	<f:render section="Fulltype" optional="true">
 		<span class="b_title">
 			<f:render section="Type" optional="true">
-				{f:translate(key: 'LLL:EXT:backendpreviews/Resource/Private/Language/locallang_db.xlf:CType.label')}: {CType -> f:format.case(mode: 'capital')}
+				<f:render partial="Defaults/CTypeLabel" arguments="{_all}"/>
 			</f:render>
 		</span><br>
 	</f:render>
