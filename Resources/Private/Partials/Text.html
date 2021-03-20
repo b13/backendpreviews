@@ -3,6 +3,10 @@
 	data-namespace-typo3-fluid="true"
 >
 
-{text -> f:format.stripTags() -> f:format.nl2br()}<br>
+<f:if condition="{text}">
+	<div class="b_text">
+		{text -> f:format.stripTags() -> f:format.nl2br()}
+	</div>
+</f:if>
 
 </html>

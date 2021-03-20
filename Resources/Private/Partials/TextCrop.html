@@ -3,6 +3,10 @@
 	data-namespace-typo3-fluid="true"
 >
 
-{text -> f:format.raw() -> f:format.crop(maxCharacters: 300)}<br>
+<f:if condition="{text}">
+	<div class="b_text">
+		{text -> f:format.raw() -> f:format.crop(maxCharacters: 300)}
+	</div>
+</f:if>
 
 </html>

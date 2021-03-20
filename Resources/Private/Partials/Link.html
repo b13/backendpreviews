@@ -3,9 +3,13 @@
 	data-namespace-typo3-fluid="true"
 >
 
-<span class="b_label">{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.label')}: </span>{linklabel} ({f:uri.typolink(parameter: link)})
-<f:if condition="{config}">
-	[{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.config')}: {config}]
+<f:if condition="{link}">
+	<div class="b_link">
+		<span class="b_label">{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.label')}: </span>{linklabel} ({f:uri.typolink(parameter: link)})
+		<f:if condition="{config}">
+			[{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:link.config')}: {config}]
+		</f:if>
+	</div>
 </f:if>
 
 </html>

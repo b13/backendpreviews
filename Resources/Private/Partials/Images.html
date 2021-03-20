@@ -3,8 +3,12 @@
 	data-namespace-typo3-fluid="true"
 >
 
-<f:for each="{images}" as="image">
-	<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
-</f:for>
+<f:if condition="{images}">
+	<div class="b_images">
+		<f:for each="{images}" as="image">
+			<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
+		</f:for>
+	</div>
+</f:if>
 
 </html>
