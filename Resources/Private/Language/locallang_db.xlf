@@ -16,6 +16,31 @@
 			<trans-unit id="link.config" resname="link.config">
 				<source>Type</source>
 			</trans-unit>
+
+			<trans-unit id="warnings.label.warning" resname="warnings.label.warning">
+				<source>Warning</source>
+			</trans-unit>
+			<trans-unit id="warnings.label.error" resname="warnings.label.error">
+				<source>Error</source>
+			</trans-unit>
+			<trans-unit id="warnings.firstItemOnly" resname="warnings.firstItemOnly">
+				<source>Only the first visible item will be used.</source>
+			</trans-unit>
+			<trans-unit id="warnings.firstImageOnly" resname="warnings.firstImageOnly">
+				<source>Only the first visible image will be used.</source>
+			</trans-unit>
+			<trans-unit id="warnings.firstAssetOnly" resname="warnings.firstAssetOnly">
+				<source>Only the first visible asset will be used.</source>
+			</trans-unit>
+			<trans-unit id="warnings.noImage" resname="warnings.noImage">
+				<source>This element will not be shown without an active, visible image!</source>
+			</trans-unit>
+			<trans-unit id="warnings.noAsset" resname="warnings.noAsset">
+				<source>This element will not be shown without an active, visible asset!</source>
+			</trans-unit>
+			<trans-unit id="warnings.noItem" resname="warnings.noItem">
+				<source>This element will not be shown without an active, visible item!</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

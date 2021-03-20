@@ -1,10 +1,18 @@
 :root {
 	--color-muted: #d0d0d0;
+	--color-white: #fff;
+
+	/* Message colors, see TYPO3 */
+	--color-error: #c83c3c;
+	--color-warning: #e8a33d; /* #ffc800; */
+
 	--spacing-image: 10px;
+	--spacing-warning: 10px;
 	--tiles-width-default: 300px;
 	--tiles-width-small: 200px;
 	--tiles-width-big: 450x;
 	--opacity-hidden: 0.5;
+
 }
 
 .b_title {
@@ -47,4 +55,22 @@
 
 .b_html {
 	color: var(--color-muted);
+}
+
+.b_warning {
+	margin-top: var(--spacing-warning);
+	background-color: var(--color-warning);
+	color: var(--color-white);
+	padding: 3px;
+}
+
+.b_warning--error {
+	background-color: var(--color-error);
+}
+
+.b_warning__title {
+	font-weight: bold;
+}
+.b_warning__title::after {
+	content: ":";
 }

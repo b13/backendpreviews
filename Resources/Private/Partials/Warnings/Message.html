@@ -1,0 +1,24 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:switch expression="{type}">
+	<f:case value="warning">
+		<div class="b_warning">
+			<core:icon identifier="exclamation-circle" size="small" />
+			<span class="b_warning__title"><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.warning" /></span>
+			<f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}" />
+		</div>
+	</f:case>
+	<f:case value="error">
+		<div class="b_warning b_warning--error">
+			<core:icon identifier="exclamation-circle" size="small" />
+			<span class="b_warning__title"><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.error" /></span>
+			<f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}" />
+		</div>
+	</f:case>
+</f:switch>
+
+</html>
