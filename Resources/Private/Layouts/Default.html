@@ -21,7 +21,7 @@
 		</span><br>
 	</f:render>
 	<f:render section="Subheader" optional="true">
-		<f:if condition="{subheader}"><span class="b_subheader">{subheader}</span><br></f:if>
+		<f:render partial="Defaults/Subheader" arguments="{_all}" />
 	</f:render>
 	<f:render section="Fullmain" optional="true">
 		<div class="b_content">
