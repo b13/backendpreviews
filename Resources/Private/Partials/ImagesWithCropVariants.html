@@ -1,0 +1,23 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+<f:comment>
+	<!--
+		Use this partial to show multiple cropVariants for each image. We show each image in a single row (if there are
+		multiple images).
+
+		Usage:
+		<f:render partial="ImagesWithCropVariants"
+						  arguments="{images: allImages, cropVariants: '{0: default, 1: \'desktop\'}' />
+	-->
+</f:comment>
+
+<f:for each="{images}" as="image">
+	<f:for each="{cropVariants}" as="cropVariant">
+		<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
+	</f:for>
+</f:for>
+
+</html>
