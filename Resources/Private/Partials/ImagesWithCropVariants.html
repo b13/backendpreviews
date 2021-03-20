@@ -14,10 +14,16 @@
 	-->
 </f:comment>
 
-<f:for each="{images}" as="image">
-	<f:for each="{cropVariants}" as="cropVariant">
-		<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
-	</f:for>
-</f:for>
+<f:if condition="{images}">
+	<div class="b_images">
+		<f:for each="{images}" as="image">
+			<div class="b_imagevariants">
+				<f:for each="{cropVariants}" as="cropVariant">
+					<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
+				</f:for>
+			</div>
+		</f:for>
+	</div>
+</f:if>
 
 </html>
