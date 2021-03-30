@@ -78,3 +78,11 @@
 .b_ul {
 	padding-inline-start: 1.5em;
 }
+
+.b_listgroup {
+	margin-top: 10px;
+}
+
+.b_listgroup:first-child:last-child {
+	margin-top: 0;
+}
