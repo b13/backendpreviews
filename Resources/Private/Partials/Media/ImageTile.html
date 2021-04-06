@@ -6,7 +6,9 @@
 <div class="b_tiles">
 	<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
 	<br>
-	{content}
+	<f:if condition="{content}">
+		<div class="b_tiles__text">{content}</div>
+	</f:if>
 </div>
 
 </html>

@@ -8,6 +8,7 @@
 
 	--spacing-image: 10px;
 	--spacing-warning: 10px;
+	--spacing-caption: 5px;
 	--tiles-width-default: 300px;
 	--tiles-width-small: 200px;
 	--tiles-width-big: 450x;
@@ -43,6 +44,7 @@
 .b_tiles {
 	width: var(--tiles-width-default);
 	display: inline-block;
+	vertical-align: top;
 }
 
 .b_tiles--small {
@@ -51,6 +53,10 @@
 
 .b_tiles--big {
 	width: var(--tiles-width-big);
+}
+
+.b_tiles__text {
+	margin-top: var(--spacing-caption);
 }
 
 .b_html {
