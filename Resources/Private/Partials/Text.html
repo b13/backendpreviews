@@ -5,16 +5,16 @@
 >
 
 <f:if condition="{text}">
-	<f:if condition="!{showFull}">
-		<f:then>
-			{text -> b13:renderBodytext(crop: '{crop}')}
-		</f:then>
-		<f:else>
-			<div class="b_text">
-				{text -> f:format.stripTags() -> f:format.nl2br()}
-			</div>
-		</f:else>
-	</f:if>
+	<div class="b_text">
+		<f:if condition="!{showFull}">
+			<f:then>
+				{text -> b13:renderBodytext(crop: crop)}
+			</f:then>
+			<f:else>
+					{text -> f:format.stripTags() -> f:format.nl2br()}
+			</f:else>
+		</f:if>
+	</div>
 </f:if>
 
 </html>
