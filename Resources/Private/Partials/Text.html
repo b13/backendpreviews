@@ -1,12 +1,20 @@
 <html
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:bpv="http://typo3.org/ns/B13/Backendpreviews/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
 <f:if condition="{text}">
-	<div class="b_text">
-		{text -> f:format.stripTags() -> f:format.nl2br()}
-	</div>
+	<f:if condition="{showFull}">
+		<f:then>
+			{text -> bpv:renderBodytext()}
+		</f:then>
+		<f:else>
+			<div class="b_text">
+				{text -> f:format.stripTags() -> f:format.nl2br()}
+			</div>
+		</f:else>
+	</f:if>
 </f:if>
 
 </html>
