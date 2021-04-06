@@ -30,6 +30,11 @@ class RenderBodytextViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
+     * Default crop value, used as fallback.
+     */
+    const DEFAULT_CROP_VALUE = 1500;
+
+    /**
      * Initialize arguments.
      *
      * @return void
@@ -47,9 +52,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'crop',
             'int',
-            'change the default crop value to this number of characters',
-            '',
-            '1500'
+            'change the default crop value to this number of characters'
         );
     }
 
@@ -61,7 +64,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $crop = $arguments['crop'];
+        $crop = $arguments['crop'] ? $arguments['crop'] : self::DEFAULT_CROP_VALUE;
         $value = $arguments['value'];
         if ($value === null) {
             $value = $renderChildrenClosure();
