@@ -1,13 +1,13 @@
 <html
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:bpv="http://typo3.org/ns/B13/Backendpreviews/ViewHelpers"
+	xmlns:b13="http://typo3.org/ns/B13/Backendpreviews/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
 <f:if condition="{text}">
 	<f:if condition="!{showFull}">
 		<f:then>
-			{text -> bpv:renderBodytext(crop: '{crop}')}
+			{text -> b13:renderBodytext(crop: '{crop}')}
 		</f:then>
 		<f:else>
 			<div class="b_text">
