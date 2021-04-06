@@ -5,9 +5,9 @@
 >
 
 <f:if condition="{text}">
-	<f:if condition="{showFull}">
+	<f:if condition="!{showFull}">
 		<f:then>
-			{text -> bpv:renderBodytext()}
+			{text -> bpv:renderBodytext(crop: '{crop}')}
 		</f:then>
 		<f:else>
 			<div class="b_text">
