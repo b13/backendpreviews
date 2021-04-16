@@ -101,11 +101,11 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
         }
         if ($row['assets2']) {
             $row['allAssets2'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets2', 'tt_content', $row['uid']);
-            $row['allAssets-visible'] = \Backendpreviews\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets2', 'tt_content', $row['uid']);
+            $row['allAssets-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets2', 'tt_content', $row['uid']);
         }
         if ($row['media']) {
             $row['allMedia'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('media', 'tt_content', $row['uid']);
-            $row['allMedia-visible'] = \Backendpreviews\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('media', 'tt_content', $row['uid']);
+            $row['allMedia-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('media', 'tt_content', $row['uid']);
         }
         if ($row['image']) {
             $row['allImages'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('image', 'tt_content', $row['uid']);
