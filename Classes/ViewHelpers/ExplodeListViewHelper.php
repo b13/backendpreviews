@@ -62,7 +62,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
      * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
     {
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         $value = $arguments['value'] ?? $renderChildrenClosure();
