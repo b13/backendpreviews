@@ -40,7 +40,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
      * @return void
      * @api
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument(
