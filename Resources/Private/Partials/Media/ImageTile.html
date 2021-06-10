@@ -7,7 +7,7 @@
 	<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
 	<br>
 	<f:if condition="{content}">
-		<div class="b_tiles__text">{content}</div>
+		<div class="b_tiles__text">{content -> f:format.raw()}</div>
 	</f:if>
 </div>
 
