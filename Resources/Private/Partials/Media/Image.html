@@ -3,11 +3,13 @@
 	data-namespace-typo3-fluid="true"
 >
 
-<f:image
-	src="{image.uid}" treatIdAsReference="1"
-	height="64"
-	class="b_image {f:if(condition: image.hidden, then: 'b_image--hidden')}"
-	cropVariant="{cropVariant}"
-/>
+<f:if condition="{image.uid}">
+	<f:image
+		src="{image.uid}" treatIdAsReference="1"
+		height="64"
+		class="b_image {f:if(condition: image.hidden, then: 'b_image--hidden')}"
+		cropVariant="{cropVariant}"
+	/>
+</f:if>
 
 </html>
