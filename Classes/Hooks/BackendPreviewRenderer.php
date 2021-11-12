@@ -95,19 +95,19 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
         );
 
         // return all sys_file_reference rows
-        if ($row['assets']) {
+        if ($row['assets'] ?? false) {
             $row['allAssets'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets', 'tt_content', $row['uid']);
             $row['allAssets-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets', 'tt_content', $row['uid']);
         }
-        if ($row['assets2']) {
+        if ($row['assets2'] ?? false) {
             $row['allAssets2'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets2', 'tt_content', $row['uid']);
             $row['allAssets-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets2', 'tt_content', $row['uid']);
         }
-        if ($row['media']) {
+        if ($row['media'] ?? false) {
             $row['allMedia'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('media', 'tt_content', $row['uid']);
             $row['allMedia-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('media', 'tt_content', $row['uid']);
         }
-        if ($row['image']) {
+        if ($row['image'] ?? false) {
             $row['allImages'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('image', 'tt_content', $row['uid']);
             $row['allImages-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('image', 'tt_content', $row['uid']);
         }
