@@ -42,25 +42,34 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
         &$itemContent,
         array &$row
     ) {
-        $this->setDefaults($row);
-
-        $tsConfig = BackendUtility::getPagesTSconfig($row['pid'])['mod.']['web_layout.']['tt_content.']['preview.']['template.'] ?? [];
-        $fluidTemplateName = $row['CType'];
-
-        if ($row['CType'] === 'list' && !empty($row['list_type'])
-            && !empty($tsConfig['list.'][$row['list_type']])
-        ) {
-            $fluidTemplateName = $tsConfig['list.'][$row['list_type']];
-        } elseif (!empty($tsConfig[$row['CType']])) {
-            $fluidTemplateName = $tsConfig[$row['CType']];
+        $previewConfiguration = BackendUtility::getPagesTSconfig($row['pid'])['mod.']['web_layout.']['tt_content.']['preview.'] ?? [];
+        if (!$previewConfiguration) {
+            // Early return in case no preview configuration can be found
+            return;
         }
 
-        $fluidConfiguration = BackendUtility::getPagesTSconfig($row['pid'])['mod.']['web_layout.']['tt_content.']['preview.']['view.'] ?? [];
+        $fluidConfiguration = $previewConfiguration['view.'] ?? [];
+        if (!$fluidConfiguration) {
+            // Early return in case no fluid template configuration can be found
+            return;
+        }
+
+        $this->setDefaults($row);
+
+        $templateConfiguration = $previewConfiguration['template.'] ?? [];
+        if ($row['CType'] === 'list' && !empty($row['list_type']) && !empty($templateConfiguration['list.'][$row['list_type']])) {
+            $fluidTemplateName = $templateConfiguration['list.'][$row['list_type']];
+        } elseif (!empty($templateConfiguration[$row['CType']])) {
+            $fluidTemplateName = $templateConfiguration[$row['CType']];
+        } else {
+            $fluidTemplateName = $row['CType'];
+        }
+
 
         $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setLayoutRootPaths($fluidConfiguration['layoutRootPaths.']);
-        $view->setPartialRootPaths($fluidConfiguration['partialRootPaths.']);
-        $view->setTemplateRootPaths($fluidConfiguration['templateRootPaths.']);
+        $view->setLayoutRootPaths($fluidConfiguration['layoutRootPaths.'] ?? []);
+        $view->setPartialRootPaths($fluidConfiguration['partialRootPaths.'] ?? []);
+        $view->setTemplateRootPaths($fluidConfiguration['templateRootPaths.'] ?? []);
         $view->setTemplate($fluidTemplateName);
         $view->assignMultiple($row);
 
@@ -68,7 +77,6 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
             $itemContent .= $view->render();
             $drawItem = false;
         }
-
     }
 
     protected function setDefaults(&$row) {
