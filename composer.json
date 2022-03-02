@@ -1,15 +1,21 @@
 {
-	"name": "b13/backendpreviews",
-	"type": "typo3-cms-extension",
-	"description": "Enhanced Fluid based backend element previews",
-	"extra": {
-		"typo3/cms": {
-			"extension-key": "backendpreviews"
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"B13\\Backendpreviews\\": "Classes/"
-		}
-	}
+  "name": "b13/backendpreviews",
+  "type": "typo3-cms-extension",
+  "description": "Enhanced Fluid based backend element previews",
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "backendpreviews"
+    }
+  },
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "require": {
+    "typo3/cms-backend": "^9.5 || ^10.4 || ^11.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "B13\\Backendpreviews\\": "Classes/"
+    }
+  }
 }
