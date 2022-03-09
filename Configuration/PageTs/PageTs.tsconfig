@@ -1,5 +1,5 @@
 mod.web_layout.tt_content.preview.view {
-  layoutRootPaths.0 = EXT:backendpreviews//Resources/Private/Layouts
+  layoutRootPaths.0 = EXT:backendpreviews/Resources/Private/Layouts
   partialRootPaths.0 = EXT:backendpreviews/Resources/Private/Partials
   templateRootPaths.0 = EXT:backendpreviews/Resources/Private/Templates
 }
