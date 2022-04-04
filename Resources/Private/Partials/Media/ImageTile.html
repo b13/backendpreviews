@@ -3,7 +3,7 @@
 	data-namespace-typo3-fluid="true"
 >
 
-<div class="b_tiles">
+<div class="b_tiles {f:if(condition: hidden, then: 'b_tiles--hidden')}">
 	<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
 	<br>
 	<f:if condition="{content}">
