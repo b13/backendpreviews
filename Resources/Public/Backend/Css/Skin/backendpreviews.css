@@ -47,6 +47,10 @@
 	vertical-align: top;
 }
 
+.b_tiles--hidden {
+    opacity: var(--opacity-hidden);
+}
+
 .b_tiles--small {
 	width: var(--tiles-width-small);
 }
