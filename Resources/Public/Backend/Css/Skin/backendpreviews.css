@@ -16,7 +16,8 @@
 
 }
 
-[class$="--hidden"] {
+[class$="--hidden"],
+[class*="--hidden "] {
 	opacity: var(--opacity-hidden);
 }
 
