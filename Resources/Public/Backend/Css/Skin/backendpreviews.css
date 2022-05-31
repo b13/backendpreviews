@@ -16,6 +16,11 @@
 
 }
 
+[class$="--hidden"],
+[class*="--hidden "] {
+	opacity: var(--opacity-hidden);
+}
+
 .b_title {
 	font-weight: bold;
 }
@@ -37,18 +42,10 @@
 	margin-top: var(--spacing-image);
 }
 
-.b_image--hidden {
-	opacity: var(--opacity-hidden);
-}
-
 .b_tiles {
 	width: var(--tiles-width-default);
 	display: inline-block;
 	vertical-align: top;
-}
-
-.b_tiles--hidden {
-    opacity: var(--opacity-hidden);
 }
 
 .b_tiles--small {

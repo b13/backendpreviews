@@ -13,6 +13,9 @@
   "require": {
     "typo3/cms-backend": "^9.5 || ^10.4 || ^11.5"
   },
+  "suggest": {
+    "b13/listelements": "*"
+  },
   "autoload": {
     "psr-4": {
       "B13\\Backendpreviews\\": "Classes/"
