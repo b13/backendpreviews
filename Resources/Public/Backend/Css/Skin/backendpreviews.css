@@ -88,8 +88,8 @@
 	margin-bottom: 0;
 }
 
-.b_images + .b_ul {
-	var(--spacing-image);
+.b_images + * {
+	margin-top: var(--spacing-image);
 }
 
 .b_listgroup {
