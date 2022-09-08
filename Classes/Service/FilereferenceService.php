@@ -46,8 +46,10 @@ class FilereferenceService
                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($reference['uid_local']))
                 )
                 ->execute()
-                ->fetchAll();
-            $references[$key]['originalFile'] = $originalFile[0];
+                ->fetch();
+            if ($originalFile !== false) {
+                $references[$key]['originalFile'] = $originalFile;
+            }
             // add the database record for the original file's metadata
             $queryBuilder = self::getQueryBuilder('sys_file_metadata');
             $originalFileMetaData = $queryBuilder
@@ -57,8 +59,10 @@ class FilereferenceService
                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($reference['uid_local']))
                 )
                 ->execute()
-                ->fetchAll();
-            $references[$key]['originalFileMetaData'] = $originalFileMetaData[0];
+                ->fetch();
+            if ($originalFileMetaData !== false) {
+                $references[$key]['originalFileMetaData'] = $originalFileMetaData;
+            }
         }
         return $references;
     }
