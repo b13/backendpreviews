@@ -21,12 +21,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  *
  * View helper to explode a comma-separated list (like a uid list you would find as value in tt_content field "pages"
  * into an array.
- *
- * @package B13\Backendpreviews\ViewHelpers
  */
 class ExplodeListViewHelper extends AbstractViewHelper
 {
-
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
@@ -37,7 +34,6 @@ class ExplodeListViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      *
-     * @return void
      * @api
      */
     public function initializeArguments(): void
@@ -48,7 +44,8 @@ class ExplodeListViewHelper extends AbstractViewHelper
             'string',
             'The input value. If non is given, the evaluated child nodes will be used.',
             false,
-            null);
+            null
+        );
         $this->registerArgument(
             'splitChar',
             'string',
@@ -59,7 +56,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
     /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
-     * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param RenderingContextInterface $renderingContext
      * @return array
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array

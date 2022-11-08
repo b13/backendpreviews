@@ -7,13 +7,12 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'David Steeb',
     'author_email' => 'typo3@b13.com',
     'state' => 'stable',
-    'uploadfolder' => 0,
-    'clearCacheOnLoad' => 1,
+    'clearCacheOnLoad' => true,
     'author_company' => 'b13 GmbH, Stuttgart',
-    'version' => '1.0.0',
+    'version' => '2.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-11.99.99',
-        ]
-    ]
+            'typo3' => '10.4.0-12.99.99',
+        ],
+    ],
 ];

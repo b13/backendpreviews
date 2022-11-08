@@ -25,12 +25,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  * Class GetDatabaseRecordViewHelper
  *
  * ViewHelper to get database records by uid.
- *
- * @package B13\Backendpreviews\ViewHelpers
  */
 class GetDatabaseRecordViewHelper extends AbstractViewHelper
 {
-
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
@@ -41,7 +38,6 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      *
-     * @return void
      * @api
      */
     public function initializeArguments(): void
@@ -65,7 +61,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
     /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
-     * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param RenderingContextInterface $renderingContext
      * @return array
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
@@ -80,7 +76,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($arguments['uidList'])),
             )
             ->execute()
-            ->fetchAll();
+            ->fetchAllAssociative();
         return $result;
     }
 
@@ -93,5 +89,4 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
             ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, (int)$GLOBALS['BE_USER']->workspace));
         return $queryBuilder;
     }
-
 }
