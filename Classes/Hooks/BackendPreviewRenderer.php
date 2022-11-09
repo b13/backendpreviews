@@ -14,6 +14,8 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -102,24 +104,36 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
             BackendUtility::getLabelFromItemListMerged($row['pid'], 'tt_content', 'CType', $row['CType'])
         );
 
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         // return all sys_file_reference rows
         if ($row['assets'] ?? false) {
-            $row['allAssets'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets', 'tt_content', $row['uid']);
-            $row['allAssets-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets', 'tt_content', $row['uid']);
+            $row['allAssets'] = $fileRepository->findByRelation('tt_content','assets', $row['uid']);
+            $row['allAssets-visible'] = $this->countVisibleFileReferences($row['allAssets']);
         }
         if ($row['assets2'] ?? false) {
-            $row['allAssets2'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('assets2', 'tt_content', $row['uid']);
-            $row['allAssets-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('assets2', 'tt_content', $row['uid']);
+            $row['allAssets2'] = $fileRepository->findByRelation('tt_content','assets2', $row['uid']);
+            $row['allAssets2-visible'] = $this->countVisibleFileReferences($row['allAssets2']);
         }
         if ($row['media'] ?? false) {
-            $row['allMedia'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('media', 'tt_content', $row['uid']);
-            $row['allMedia-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('media', 'tt_content', $row['uid']);
+            $row['allMedia'] = $fileRepository->findByRelation('tt_content','media', $row['uid']);
+            $row['allMedia-visible'] = $this->countVisibleFileReferences($row['allMedia']);
         }
         if ($row['image'] ?? false) {
-            $row['allImages'] = \B13\Backendpreviews\Service\FilereferenceService::resolveFilereferences('image', 'tt_content', $row['uid']);
-            $row['allImages-visible'] = \B13\Backendpreviews\Service\FilereferenceService::countNumberOfVisibleFilereferences('image', 'tt_content', $row['uid']);
+            $row['allImages'] = $fileRepository->findByRelation('tt_content','image', $row['uid']);
+            $row['allImages-visible'] = $this->countVisibleFileReferences($row['allImages']);
         }
+    }
 
+    protected function countVisibleFileReferences(array $references): int
+    {
+        $cnt = 0;
+        /** @var FileReference $reference */
+        foreach ($references as $reference) {
+            if ((int)$reference->getProperty('hidden') === 0) {
+                $cnt++;
+            }
+        }
+        return $cnt;
     }
 
     /**
