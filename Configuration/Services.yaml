@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  B13\Backendpreviews\:
+    resource: '../Classes/*'
+  B13\Backendpreviews\Hooks\BackendPreviewRenderer:
+    public: true
+  B13\Backendpreviews\Listener\PageContentPreviewRendering:
+    tags:
+      - name: event.listener
+        identifier: 'b13-backendpreview-page-content-preview-rendering'

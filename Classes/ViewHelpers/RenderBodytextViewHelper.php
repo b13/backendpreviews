@@ -21,12 +21,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  * Class RenderBodytextViewHelper
  *
  * View helper to process bodytext field values for backend preview, similar to PageLayoutView:renderText().
- *
- * @package B13\Backendpreviews\ViewHelpers
  */
 class RenderBodytextViewHelper extends AbstractViewHelper
 {
-
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
@@ -37,7 +34,6 @@ class RenderBodytextViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      *
-     * @return void
      * @api
      */
     public function initializeArguments()
@@ -48,7 +44,8 @@ class RenderBodytextViewHelper extends AbstractViewHelper
             'string',
             'The input value. If not given, the evaluated child nodes will be used.',
             false,
-            null);
+            null
+        );
         $this->registerArgument(
             'crop',
             'int',
@@ -59,7 +56,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
     /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
-     * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param RenderingContextInterface $renderingContext
      * @return string
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
@@ -74,5 +71,6 @@ class RenderBodytextViewHelper extends AbstractViewHelper
             $value = GeneralUtility::fixed_lgd_cs($value, $crop);
             return nl2br(htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8', false));
         }
+        return '';
     }
 }
