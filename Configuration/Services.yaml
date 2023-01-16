@@ -11,4 +11,5 @@ services:
   B13\Backendpreviews\Listener\PageContentPreviewRendering:
     tags:
       - name: event.listener
+        event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
         identifier: 'b13-backendpreview-page-content-preview-rendering'
