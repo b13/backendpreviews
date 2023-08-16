@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+use function HighlightUtilities\splitCodeIntoArray;
 
 /**
  * Class RenderBodytextViewHelper
@@ -31,7 +32,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
      */
     const DEFAULT_CROP_VALUE = 1500;
 
-    const DEFAULT_KEEP_TAGS_LIST = 'ol, ul, li';
+    const DEFAULT_KEEP_TAGS_LIST = ['ol', 'ul', 'li'];
 
     /**
      * Initialize arguments.
@@ -56,7 +57,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'keepTags',
             'string',
-            'List of tags to keep (example: "ol, li"). Set to "none" to remove all tags. Default: "ol, ul, li".',
+            'List of tags to keep (example: "ol, li"). Set to "none" to remove all tags. Default: "[ol, ul, li]".',
         );
     }
 
@@ -74,8 +75,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
             $crop = $arguments['crop'] ? $arguments['crop'] : self::DEFAULT_CROP_VALUE;
         }
         $value = $arguments['value'];
-        $keepTags = $arguments['keepTags'] ?: self::DEFAULT_KEEP_TAGS_LIST;
-
+        $keepTags = $arguments['keepTags'] ? explode(',', str_replace(' ', '', $arguments['keepTags'])): self::DEFAULT_KEEP_TAGS_LIST;
         if ($value === null) {
             $value = $renderChildrenClosure();
         }
