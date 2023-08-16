@@ -8,10 +8,10 @@
 	<div class="b_text">
 		<f:if condition="!{showFull}">
 			<f:then>
-				{text -> b13:renderBodytext(crop: crop) -> f:format.raw()}
+				{text -> b13:renderBodytext(crop: crop, keepTags: keepTags) -> f:format.raw()}
 			</f:then>
 			<f:else>
-					{text -> f:format.stripTags() -> f:format.nl2br()}
+				{text -> b13:renderBodytext(crop: 0, keepTags: keepTags) -> f:format.raw()}
 			</f:else>
 		</f:if>
 	</div>

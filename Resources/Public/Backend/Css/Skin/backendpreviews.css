@@ -109,3 +109,16 @@
 	position: relative;
 	width: 15px;
 }
+
+.b_text ul, .b_text li {
+	padding-inline-start: 1.5em;
+	margin-bottom: 0;
+}
+
+.b_text li {
+	padding-left: 0;
+}
+
+.b_text ul ~ br, .b_text ol ~ br {
+	display: none;
+}

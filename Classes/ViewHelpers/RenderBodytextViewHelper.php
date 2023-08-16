@@ -31,6 +31,8 @@ class RenderBodytextViewHelper extends AbstractViewHelper
      */
     const DEFAULT_CROP_VALUE = 1500;
 
+    const DEFAULT_KEEP_TAGS_LIST = 'ol, ul, li';
+
     /**
      * Initialize arguments.
      *
@@ -49,7 +51,12 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'crop',
             'int',
-            'change the default crop value to this number of characters'
+            'Change the default crop value to this number of characters. Set to 0 to disable. Default: 1500.'
+        );
+        $this->registerArgument(
+            'keepTags',
+            'string',
+            'List of tags to keep (example: "ol, li"). Set to "none" to remove all tags. Default: "ol, ul, li".',
         );
     }
 
@@ -61,16 +68,27 @@ class RenderBodytextViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $crop = $arguments['crop'] ? $arguments['crop'] : self::DEFAULT_CROP_VALUE;
+        if ($arguments['crop'] === 0) {
+            $crop = 0;
+        } else {
+            $crop = $arguments['crop'] ? $arguments['crop'] : self::DEFAULT_CROP_VALUE;
+        }
         $value = $arguments['value'];
+        $keepTags = $arguments['keepTags'] ?: self::DEFAULT_KEEP_TAGS_LIST;
+
         if ($value === null) {
             $value = $renderChildrenClosure();
         }
+
         if ($value) {
-            $value = strip_tags($value);
+            $value = strip_tags($value, $keepTags);
             $value = GeneralUtility::fixed_lgd_cs($value, $crop);
+            if ($keepTags !== null) {
+                return nl2br(trim($value));
+            }
             return nl2br(htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8', false));
         }
+
         return '';
     }
 }
