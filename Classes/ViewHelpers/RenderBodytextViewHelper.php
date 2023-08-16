@@ -31,7 +31,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
      */
     const DEFAULT_CROP_VALUE = 1500;
 
-    const DEFAULT_KEEP_TAGS_LIST = '<ol>,<ul>,<li>';
+    const DEFAULT_KEEP_TAGS_LIST = 'ol, ul, li';
 
     /**
      * Initialize arguments.
@@ -56,7 +56,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'keepTags',
             'string',
-            'List of tags to keep (example: \"<ol>,<li>\"). Set to \"none\" to remove all tags. Default: \"<ol>,<ul>,<li>\".',
+            'List of tags to keep (example: "ol, li"). Set to "none" to remove all tags. Default: "ol, ul, li".',
         );
     }
 
