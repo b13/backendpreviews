@@ -73,7 +73,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
             ->select('*')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($arguments['uidList'])),
+                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter(explode($splitChar, $arguments['uidList']), Connection::PARAM_INT_ARRAY)),
             )
             ->execute()
             ->fetchAllAssociative();
