@@ -31,9 +31,10 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
-     * Default table
+     * Defaults
      */
     const DEFAULT_TABLE = 'tt_content';
+    const DEFAULT_SPLIT_CHAR = ',';
 
     /**
      * Initialize arguments.
@@ -56,6 +57,11 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
             'The record uid(s).',
             true
         );
+        $this->registerArgument(
+            'splitChar',
+            'string',
+            'Character to split up the string. Default: ,',
+        );
     }
 
     /**
@@ -68,6 +74,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
     {
         $table = $arguments['table'] ?? self::DEFAULT_TABLE;
         $queryBuilder = self::getQueryBuilder($table);
+        $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
 
         $result = $queryBuilder
             ->select('*')
