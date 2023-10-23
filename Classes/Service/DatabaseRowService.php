@@ -56,15 +56,19 @@ class DatabaseRowService implements SingletonInterface
         // return all sys_file_reference rows
         if ($row['assets'] ?? false) {
             $row['allAssets'] = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
+            $row['allAssets-visible'] = $this->countVisibleFileReferences($row['allAssets']);
         }
         if ($row['assets2'] ?? false) {
             $row['allAssets2'] = $this->fileRepository->findByRelation('tt_content', 'assets2', $row['uid']);
+            $row['allAssets2-visible'] = $this->countVisibleFileReferences($row['allAssets2']);
         }
         if ($row['media'] ?? false) {
             $row['allMedia'] = $this->fileRepository->findByRelation('tt_content', 'media', $row['uid']);
+            $row['allMedia-visible'] = $this->countVisibleFileReferences($row['allMedia']);
         }
         if ($row['image'] ?? false) {
             $row['allImages'] = $this->fileRepository->findByRelation('tt_content', 'image', $row['uid']);
+            $row['allImages-visible'] = $this->countVisibleFileReferences($row['allImages']);
         }
         return $row;
     }
@@ -77,5 +81,17 @@ class DatabaseRowService implements SingletonInterface
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
+    }
+
+    protected function countVisibleFileReferences(array $references): int
+    {
+        $cnt = 0;
+        /** @var FileReference $reference */
+        foreach ($references as $reference) {
+            if ((int)$reference->getProperty('hidden') === 0) {
+                $cnt++;
+            }
+        }
+        return $cnt;
     }
 }
