@@ -4,6 +4,9 @@
 >
 
 <f:if condition="{images}">
+	<f:if condition="!{cropVariant}">
+		<f:variable name="cropVariant" value="default"/>
+	</f:if>
 	<div class="b_images">
 		<f:for each="{images}" as="image">
 			<f:render partial="Media/Image" arguments="{image: image, cropVariant: cropVariant}" />
