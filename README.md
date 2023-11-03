@@ -41,6 +41,15 @@ You can set a different templateName explicitly like this:
 mod.web_layout.tt_content.preview.template.mytype = Myowntemplate
 ```
 
+## Use custom backend previews for default CTypes
+
+Default CTypes for `fluid_styled_content` define dedicated `previewRenderer` classes. If you want to use `EXT:backendpreviews` instead, 
+remove the configuration for each of these CTypes in your extensions's `ext_localconf.php`:
+
+```
+unset($GLOBALS['TCA']['tt_content']['types']['textpic']['previewRenderer']);
+```
+
 ## License
 
 As TYPO3 Core, _backendpreviews_ is licensed under GPL2 or later. See the LICENSE file for more details.
