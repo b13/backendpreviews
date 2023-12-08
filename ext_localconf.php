@@ -31,3 +31,6 @@ if (
         ]
     );
 }
+if ((\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class))->getMajorVersion() >= 12) {
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['b13/backendpreviews'] = 'EXT:backendpreviews/Resources/Public/Backend/Css/Skin/';
+}
