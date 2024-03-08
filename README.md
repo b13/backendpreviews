@@ -41,6 +41,14 @@ You can set a different templateName explicitly like this:
 mod.web_layout.tt_content.preview.template.mytype = Myowntemplate
 ```
 
+For plugins a template name for a specific plugin can be specified like this:
+
+```
+mod.web_layout.tt_content.preview.template.list.mylist_type = Listtypetemplate
+```
+
+All flexform settings of the plugin are available in `$pi_flexform_transformed` to create meaningful previews.
+
 ## License
 
 As TYPO3 Core, _backendpreviews_ is licensed under GPL2 or later. See the LICENSE file for more details.

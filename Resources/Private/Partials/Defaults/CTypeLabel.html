@@ -1,10 +1,15 @@
 <html
-        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-        data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
 >
 
-<f:if condition="{CType-label}">
-    <f:then>{CType-label}</f:then>
+<f:if condition="{list_type-label}">
+    <f:then>
+        {list_type-label}
+    </f:then>
+    <f:else if="{CType-label}">
+        {CType-label}
+    </f:else>
     <f:else>
         {f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:CType.label')}: {CType -> f:format.case(mode: 'capital')}
     </f:else>

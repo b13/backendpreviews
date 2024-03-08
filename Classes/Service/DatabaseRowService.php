@@ -17,6 +17,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -52,6 +53,17 @@ class DatabaseRowService implements SingletonInterface
         $row['CType-label'] = $this->getLanguageService()->sL(
             BackendUtility::getLabelFromItemListMerged($row['pid'], 'tt_content', 'CType', $row['CType'])
         );
+
+        if ($row['CType'] === 'list') {
+            $row['list_type-label'] = $this->getLanguageService()->sL(
+                BackendUtility::getLabelFromItemListMerged($row['pid'], 'tt_content', 'list_type', $row['list_type'])
+            );
+
+            if (!empty($row['pi_flexform'])) {
+                $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+                $row['pi_flexform_transformed'] = $flexFormService->convertFlexFormContentToArray($row['pi_flexform']);
+            }
+        }
 
         // return all sys_file_reference rows
         if ($row['assets'] ?? false) {
