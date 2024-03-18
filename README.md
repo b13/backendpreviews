@@ -41,15 +41,28 @@ You can set a different templateName explicitly like this:
 mod.web_layout.tt_content.preview.template.mytype = Myowntemplate
 ```
 
+For plugins a template name for a specific plugin can be specified like this:
+
+```
+mod.web_layout.tt_content.preview.template.list.mylist_type = Listtypetemplate
+```
+
+All flexform data of the plugin are available in `{pi_flexform_transformed}` to create meaningful previews:
+
+```
+<b>Page:</b> {pi_flexform_transformed.settings.page}
+```
+
 ## Use custom backend previews for default CTypes
 
 Default CTypes for `fluid_styled_content` define dedicated `previewRenderer` classes. If you want to use `EXT:backendpreviews` instead, 
-remove the configuration for each of these CTypes in your extensions's `ext_localconf.php`:
+remove the configuration for each of these CTypes in your extension's `ext_localconf.php`:
 
 ```
 unset($GLOBALS['TCA']['tt_content']['types']['textpic']['previewRenderer']);
 ```
 
+>>>>>>> master
 ## License
 
 As TYPO3 Core, _backendpreviews_ is licensed under GPL2 or later. See the LICENSE file for more details.
