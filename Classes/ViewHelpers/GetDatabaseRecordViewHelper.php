@@ -83,8 +83,10 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
             ->where(
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter(explode($splitChar, $arguments['uidList']), Connection::PARAM_INT_ARRAY)),
             )
+            ->add('orderBy', 'FIELD(uid,' . $arguments['uidList'] . ')')
             ->execute()
             ->fetchAllAssociative();
+
         return $result;
     }
 
