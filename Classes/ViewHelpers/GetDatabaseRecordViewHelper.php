@@ -76,14 +76,15 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         $table = $arguments['table'] ?? self::DEFAULT_TABLE;
         $queryBuilder = self::getQueryBuilder($table);
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
+        $uids = GeneralUtility::intExplode(($splitChar, $arguments['uidList'], true);
 
         $result = $queryBuilder
             ->select('*')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter(explode($splitChar, $arguments['uidList']), Connection::PARAM_INT_ARRAY)),
+                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($uids), Connection::PARAM_INT_ARRAY)
             )
-            ->add('orderBy', 'FIELD(uid,' . $arguments['uidList'] . ')')
+            ->add('orderBy', 'FIELD(uid,' . implode(',', $uids . ')'))
             ->execute()
             ->fetchAllAssociative();
 
