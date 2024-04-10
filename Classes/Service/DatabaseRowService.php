@@ -45,7 +45,7 @@ class DatabaseRowService implements SingletonInterface
             $url = (string)$uriBuilder->buildUriFromRoute('record_edit', $urlParameters);
             $return = [
                 'url' => $url,
-                'title' => htmlspecialchars($this->getLanguageService()->getLL('edit')),
+                'title' => htmlspecialchars($this->getLanguageService()->sL('EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')),
             ];
             $row['editLink'] = $return;
         }
@@ -66,21 +66,38 @@ class DatabaseRowService implements SingletonInterface
         }
 
         // return all sys_file_reference rows
-        if ($row['assets'] ?? false) {
-            $row['allAssets'] = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
-            $row['allAssets-visible'] = $this->countVisibleFileReferences($row['allAssets']);
+        // automatic resolving of all type=file, only works with TYPO3 v12+
+        $foundOne = false;
+        foreach ($GLOBALS['TCA']['tt_content']['columns'] as $fieldName => $fieldConfig) {
+            if ($fieldConfig['config']['type'] === 'file') {
+                $variableName = GeneralUtility::underscoredToUpperCamelCase($fieldName);
+                if ($fieldName === 'image') {
+                    $variableName = 'Images';
+                }
+                if ($row[$fieldName] ?? false) {
+                    $row['all' . $variableName] = $this->fileRepository->findByRelation('tt_content', $fieldName, $row['uid']);
+                    $row['all' . $variableName . '-visible'] = $this->countVisibleFileReferences($row['all' . $variableName]);
+                }
+                $foundOne = true;
+            }
         }
-        if ($row['assets2'] ?? false) {
-            $row['allAssets2'] = $this->fileRepository->findByRelation('tt_content', 'assets2', $row['uid']);
-            $row['allAssets2-visible'] = $this->countVisibleFileReferences($row['allAssets2']);
-        }
-        if ($row['media'] ?? false) {
-            $row['allMedia'] = $this->fileRepository->findByRelation('tt_content', 'media', $row['uid']);
-            $row['allMedia-visible'] = $this->countVisibleFileReferences($row['allMedia']);
-        }
-        if ($row['image'] ?? false) {
-            $row['allImages'] = $this->fileRepository->findByRelation('tt_content', 'image', $row['uid']);
-            $row['allImages-visible'] = $this->countVisibleFileReferences($row['allImages']);
+        if (!$foundOne) {
+            if ($row['assets'] ?? false) {
+                $row['allAssets'] = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
+                $row['allAssets-visible'] = $this->countVisibleFileReferences($row['allAssets']);
+            }
+            if ($row['assets2'] ?? false) {
+                $row['allAssets2'] = $this->fileRepository->findByRelation('tt_content', 'assets2', $row['uid']);
+                $row['allAssets2-visible'] = $this->countVisibleFileReferences($row['allAssets2']);
+            }
+            if ($row['media'] ?? false) {
+                $row['allMedia'] = $this->fileRepository->findByRelation('tt_content', 'media', $row['uid']);
+                $row['allMedia-visible'] = $this->countVisibleFileReferences($row['allMedia']);
+            }
+            if ($row['image'] ?? false) {
+                $row['allImages'] = $this->fileRepository->findByRelation('tt_content', 'image', $row['uid']);
+                $row['allImages-visible'] = $this->countVisibleFileReferences($row['allImages']);
+            }
         }
         return $row;
     }
