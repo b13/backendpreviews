@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -78,17 +79,20 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         $uids = GeneralUtility::intExplode($splitChar, $arguments['uidList'], true);
 
-        $result = $queryBuilder
+        $queryBuilder
             ->select('*')
             ->from($table)
             ->where(
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($uids, Connection::PARAM_INT_ARRAY))
-            )
-            ->add('orderBy', 'FIELD(uid,' . implode(',', $uids ) . ')')
+            );
+        if ((new Typo3Version())->getMajorVersion() > 12) {
+            $queryBuilder->getConcreteQueryBuilder()->addOrderBy('FIELD(uid,' . implode(',', $uids ) . ')');
+        } else {
+            $queryBuilder->add('orderBy', 'FIELD(uid,' . implode(',', $uids ) . ')');
+        }
+        return $queryBuilder
             ->executeQuery()
             ->fetchAllAssociative();
-
-        return $result;
     }
 
     protected static function getQueryBuilder(string $table): QueryBuilder

@@ -1,8 +1,8 @@
-# EXT:backendpreviews
+# Nice Backend Previews for Content Elements in TYPO3
 
 ## About this extension
 
-This extension adds a hook for rendering content element previews for TYPO3's backend view in the page module, 
+This extension adds a hook for rendering content element previews for TYPO3's backend view in the page module,
 adding the ability to use Fluid Partials and Layouts to enable consistent preview markup.
 
 ## Installation
@@ -31,7 +31,7 @@ mod.web_layout.tt_content.preview.view {
 }
 ```
 
-By default, we will try to find a template to render a preview based on the CType of the element, 
+By default, we will try to find a template to render a preview based on the CType of the element,
 meaning for CType `mytype` we will try to find a template named `Mytype.html` in one of the paths defined
 in the `templateRootPaths`-Array.
 
@@ -55,22 +55,21 @@ All flexform data of the plugin are available in `{pi_flexform_transformed}` to 
 
 ## Use custom backend previews for default CTypes
 
-Default CTypes for `fluid_styled_content` define dedicated `previewRenderer` classes. If you want to use `EXT:backendpreviews` instead, 
+Default CTypes for `fluid_styled_content` define dedicated `previewRenderer` classes. If you want to use `EXT:backendpreviews` instead,
 remove the configuration for each of these CTypes in your extension's `ext_localconf.php`:
 
 ```
 unset($GLOBALS['TCA']['tt_content']['types']['textpic']['previewRenderer']);
 ```
 
->>>>>>> master
 ## License
 
 As TYPO3 Core, _backendpreviews_ is licensed under GPL2 or later. See the LICENSE file for more details.
 
 ## Background, Authors & Further Maintenance
 
-`EXT:backendpreviews` was initially created by David Steeb in 2021 for [b13, Stuttgart](https://b13.com). We use this as 
-a basis to add consistent previews for our custom content element types. 
+`EXT:backendpreviews` was initially created by David Steeb in 2021 for [b13, Stuttgart](https://b13.com). We use this as
+a basis to add consistent previews for our custom content element types.
 
 [Find more TYPO3 extensions we have developed](https://b13.com/useful-typo3-extensions-from-b13-to-you) that help us
 deliver value in client projects. As part of the way we work, we focus on testing and best practices to ensure long-term
