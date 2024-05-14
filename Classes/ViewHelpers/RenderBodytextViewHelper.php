@@ -72,7 +72,7 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         if ($arguments['crop'] === 0) {
             $crop = 0;
         } else {
-            $crop = $arguments['crop'] ? $arguments['crop'] : self::DEFAULT_CROP_VALUE;
+            $crop = $arguments['crop'] ?: self::DEFAULT_CROP_VALUE;
         }
         $value = $arguments['value'];
         $keepTags = $arguments['keepTags'] ? explode(',', str_replace(' ', '', $arguments['keepTags'])): self::DEFAULT_KEEP_TAGS_LIST;
