@@ -7,7 +7,7 @@
 	<f:image
 		src="{image.uid}" treatIdAsReference="1"
 		height="64"
-		class="b_image {f:if(condition: image.hidden, then: 'b_image--hidden')}"
+		class="b_image {f:if(condition: image.properties.hidden, then: 'b_image--hidden')}"
 		cropVariant="{cropVariant}"
 	/>
 </f:if>
