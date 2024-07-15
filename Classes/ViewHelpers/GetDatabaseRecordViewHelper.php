@@ -78,6 +78,9 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         $queryBuilder = self::getQueryBuilder($table);
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         $uids = GeneralUtility::intExplode($splitChar, (string)$arguments['uidList'], true);
+        if ($uids === []) {
+            return [];
+        }
 
         $queryBuilder
             ->select('*')
