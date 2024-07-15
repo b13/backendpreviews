@@ -55,7 +55,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         );
         $this->registerArgument(
             'uidList',
-            'string',
+            'mixed',
             'The record uid(s).',
             true
         );
@@ -77,7 +77,7 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         $table = $arguments['table'] ?? self::DEFAULT_TABLE;
         $queryBuilder = self::getQueryBuilder($table);
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
-        $uids = GeneralUtility::intExplode($splitChar, $arguments['uidList'], true);
+        $uids = GeneralUtility::intExplode($splitChar, (string)$arguments['uidList'], true);
 
         $queryBuilder
             ->select('*')
