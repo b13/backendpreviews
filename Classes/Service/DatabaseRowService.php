@@ -45,7 +45,7 @@ class DatabaseRowService implements SingletonInterface
             $url = (string)$uriBuilder->buildUriFromRoute('record_edit', $urlParameters);
             $return = [
                 'url' => $url,
-                'title' => htmlspecialchars($this->getLanguageService()->sL('EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')),
+                'title' => htmlspecialchars($this->getLanguageService()->sL('LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')),
             ];
             $row['editLink'] = $return;
         }
