@@ -17,14 +17,36 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer
 {
+    protected string $previewContent = '';
+
     public function renderPageModulePreviewHeader(GridColumnItem $item): string
     {
-        // we do not add any output by default
-        // this removes the default output of header, subheader, date, header_layout
-        return '';
+        // We do not add any header output by default:
+        // This removes the default output of header, subheader, date, header_layout
+        // Only exception:  If this would be the only content of a preview,
+        //                  we will still render it.
+        $this->setPreviewContent($item);
+        if (!empty($this->previewContent)) {
+            return '';
+        }
+        return parent::renderPageModulePreviewHeader($item);
     }
 
     public function renderPageModulePreviewContent(GridColumnItem $item): string
+    {
+        $this->setPreviewContent($item);
+        return $this->previewContent;
+    }
+
+    private function setPreviewContent(GridColumnItem $item): void
+    {
+        if (!empty($this->previewContent)) {
+            return;
+        }
+        $this->previewContent = $this->createPageModulePreviewContent($item);
+    }
+
+    private function createPageModulePreviewContent(GridColumnItem $item): string
     {
         $record = $item->getRecord();
         $contentPreview = GeneralUtility::makeInstance(ContentPreview::class);
