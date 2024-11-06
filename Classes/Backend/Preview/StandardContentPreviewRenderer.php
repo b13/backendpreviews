@@ -21,6 +21,8 @@ class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\Standard
     {
         // we do not add any output by default
         // this removes the default output of header, subheader, date, header_layout
+        // If this would be the only content of a preview, we will still render the
+        // preview Header in renderPageModulePreviewContent()
         return '';
     }
 
@@ -32,6 +34,8 @@ class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\Standard
         if ($content !== null) {
             return $content;
         }
-        return parent::renderPageModulePreviewContent($item);
+        // Fallback to renderPageModulePreviewHeader() if no content would be rendered otherwise
+        // Some core CEs (e.g. CType "header") do only render header and subheader in their preview.
+        return parent::renderPageModulePreviewContent($item) ?: parent::renderPageModulePreviewHeader($item);
     }
 }
