@@ -62,7 +62,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
     {
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
-        $value = $arguments['value'] ?? $renderChildrenClosure() ?? '';
-        return explode($splitChar, $value);
+        $value = $arguments['value'] ?? $renderChildrenClosure();
+        return explode($splitChar, (string)$value);
     }
 }
