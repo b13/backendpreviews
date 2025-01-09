@@ -58,11 +58,10 @@ class DatabaseRowService implements SingletonInterface
             $row['list_type-label'] = $this->getLanguageService()->sL(
                 BackendUtility::getLabelFromItemListMerged($row['pid'], 'tt_content', 'list_type', $row['list_type'])
             );
-
-            if (!empty($row['pi_flexform'])) {
-                $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-                $row['pi_flexform_transformed'] = $flexFormService->convertFlexFormContentToArray($row['pi_flexform']);
-            }
+        }
+        if (!empty($row['pi_flexform'])) {
+            $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+            $row['pi_flexform_transformed'] = $flexFormService->convertFlexFormContentToArray($row['pi_flexform']);
         }
 
         // return all sys_file_reference rows
