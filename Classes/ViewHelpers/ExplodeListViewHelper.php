@@ -63,6 +63,6 @@ class ExplodeListViewHelper extends AbstractViewHelper
     {
         $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         $value = $arguments['value'] ?? $renderChildrenClosure();
-        return explode($splitChar, $value);
+        return explode($splitChar, (string)$value);
     }
 }
