@@ -51,6 +51,13 @@ class ExplodeListViewHelper extends AbstractViewHelper
             'string',
             'Character to split up the string.',
         );
+        $this->registerArgument(
+            'splitNL',
+            'boolean',
+            'Split newlines. If this is true, splitChar is ignored.',
+            '',
+            'false'
+        );
     }
 
     /**
@@ -61,7 +68,11 @@ class ExplodeListViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
     {
-        $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
+        if ($arguments['splitNL'] !== false) {
+            $splitChar = PHP_EOL;
+        } else {
+            $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
+        }
         $value = $arguments['value'] ?? $renderChildrenClosure();
         return explode($splitChar, (string)$value);
     }
