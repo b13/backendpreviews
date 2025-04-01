@@ -7,16 +7,32 @@
 <f:switch expression="{type}">
 	<f:case value="warning">
 		<div class="b_warning">
-			<core:icon identifier="exclamation-circle" size="small" />
-			<span class="b_warning__title"><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.warning" /></span>
-			<f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}" />
+			<core:icon identifier="actions-exclamation-circle-alt" size="small"/>
+			<span class="b_warning__title">
+				<f:if condition="{title}">
+					<f:then>{title}</f:then>
+					<f:else><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.warning"/></f:else>
+				</f:if>
+			</span>
+			<f:if condition="{text}">
+				<f:then>{text}</f:then>
+				<f:else><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}"/></f:else>
+			</f:if>
 		</div>
 	</f:case>
 	<f:case value="error">
 		<div class="b_warning b_warning--error">
-			<core:icon identifier="exclamation-circle" size="small" />
-			<span class="b_warning__title"><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.error" /></span>
-			<f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}" />
+			<core:icon identifier="actions-exclamation-triangle-alt" size="small"/>
+			<span class="b_warning__title">
+				<f:if condition="{title}">
+					<f:then>{title}</f:then>
+					<f:else><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:warnings.label.error"/></f:else>
+				</f:if>
+			</span>
+			<f:if condition="{text}">
+				<f:then>{text}</f:then>
+				<f:else><f:translate key="LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:{key}"/></f:else>
+			</f:if>
 		</div>
 	</f:case>
 </f:switch>

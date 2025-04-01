@@ -18,10 +18,10 @@
 			</trans-unit>
 
 			<trans-unit id="warnings.label.warning" resname="warnings.label.warning">
-				<source>Warning</source>
+				<source>Warning:</source>
 			</trans-unit>
 			<trans-unit id="warnings.label.error" resname="warnings.label.error">
-				<source>Error</source>
+				<source>Error:</source>
 			</trans-unit>
 			<trans-unit id="warnings.firstItemOnly" resname="warnings.firstItemOnly">
 				<source>Only the first visible item will be used.</source>
