@@ -56,7 +56,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
             'boolean',
             'Split newlines. If this is true, splitChar is ignored.',
             '',
-            'false'
+            false
         );
     }
 
