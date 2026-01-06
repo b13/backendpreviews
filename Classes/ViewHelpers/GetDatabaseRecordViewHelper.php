@@ -30,19 +30,12 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class GetDatabaseRecordViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Defaults
      */
     const DEFAULT_TABLE = 'tt_content';
     const DEFAULT_SPLIT_CHAR = ',';
 
-    /**
-     * Initialize arguments.
-     *
-     * @api
-     */
     public function initializeArguments(): void
     {
         parent::initializeArguments();
@@ -66,18 +59,12 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
         );
     }
 
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return array
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
+    public function render(): array
     {
-        $table = $arguments['table'] ?? self::DEFAULT_TABLE;
+        $table = $this->arguments['table'] ?? self::DEFAULT_TABLE;
         $queryBuilder = self::getQueryBuilder($table);
-        $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
-        $uids = GeneralUtility::intExplode($splitChar, (string)$arguments['uidList'], true);
+        $splitChar = $this->arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
+        $uids = GeneralUtility::intExplode($splitChar, (string)($this->arguments['uidList'] ?? ''), true);
         if ($uids === []) {
             return [];
         }

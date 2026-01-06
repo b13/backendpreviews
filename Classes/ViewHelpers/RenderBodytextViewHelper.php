@@ -24,22 +24,14 @@ use function HighlightUtilities\splitCodeIntoArray;
  * View helper to process bodytext field values for backend preview, similar to PageLayoutView:renderText().
  */
 class RenderBodytextViewHelper extends AbstractViewHelper
-{
-    use CompileWithContentArgumentAndRenderStatic;
-
-    /**
+{/**
      * Default crop value, used as fallback.
      */
     const DEFAULT_CROP_VALUE = 1500;
 
     const DEFAULT_KEEP_TAGS_LIST = ['ol', 'ul', 'li'];
 
-    /**
-     * Initialize arguments.
-     *
-     * @api
-     */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument(
@@ -61,21 +53,15 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         );
     }
 
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return string
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    public function render()
     {
-        if ($arguments['crop'] === 0) {
+        if (($this->arguments['crop'] ?? 0) === 0) {
             $crop = 0;
         } else {
-            $crop = $arguments['crop'] ?: self::DEFAULT_CROP_VALUE;
+            $crop = $this->arguments['crop'] ?: self::DEFAULT_CROP_VALUE;
         }
-        $value = $arguments['value'];
-        $keepTags = $arguments['keepTags'] ? explode(',', str_replace(' ', '', $arguments['keepTags'])): self::DEFAULT_KEEP_TAGS_LIST;
+        $value = $this->arguments['value'];
+        $keepTags = $this->arguments['keepTags'] ? explode(',', str_replace(' ', '', $this->arguments['keepTags'])): self::DEFAULT_KEEP_TAGS_LIST;
         if ($value === null) {
             $value = $renderChildrenClosure();
         }
