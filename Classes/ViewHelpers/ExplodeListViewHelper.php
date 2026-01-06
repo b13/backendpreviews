@@ -24,18 +24,11 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class ExplodeListViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Default split char, used as fallback.
      */
     const DEFAULT_SPLIT_CHAR = ',';
 
-    /**
-     * Initialize arguments.
-     *
-     * @api
-     */
     public function initializeArguments(): void
     {
         parent::initializeArguments();
@@ -60,20 +53,14 @@ class ExplodeListViewHelper extends AbstractViewHelper
         );
     }
 
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return array
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): array
+    public function render()
     {
-        if ($arguments['splitNL'] !== false) {
+        if (($this->arguments['splitNL'] ?? false) !== false) {
             $splitChar = PHP_EOL;
         } else {
-            $splitChar = $arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
+            $splitChar = $this->arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         }
-        $value = $arguments['value'] ?? $renderChildrenClosure();
+        $value = $this->arguments['value'] ?? $renderChildrenClosure();
         return explode($splitChar, (string)$value);
     }
 }
