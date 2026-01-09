@@ -98,7 +98,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	grid-gap: 20px;
+	grid-gap: 30px 20px;
 }
 
 .b_listgroup:first-child:last-child {
