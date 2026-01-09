@@ -94,7 +94,11 @@
 }
 
 .b_listgroup {
-	margin-top: 10px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	grid-gap: 30px 20px;
 }
 
 .b_listgroup:first-child:last-child {
