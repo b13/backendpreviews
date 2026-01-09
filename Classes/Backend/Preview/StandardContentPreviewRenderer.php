@@ -13,6 +13,7 @@ namespace B13\Backendpreviews\Backend\Preview;
  */
 
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem;
+use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer
@@ -29,8 +30,13 @@ class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\Standard
     public function renderPageModulePreviewContent(GridColumnItem $item): string
     {
         $record = $item->getRecord();
+        $context = $item->getContext();
         $contentPreview = GeneralUtility::makeInstance(ContentPreview::class);
-        $content = $contentPreview->render($record);
+        if ($record instanceof RecordInterface) {
+            $content = $contentPreview->render($record, $context);
+        } else {
+            $content = $contentPreview->renderLegacy($record);
+        }
         if ($content !== null) {
             return $content;
         }

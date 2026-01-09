@@ -52,7 +52,7 @@ class BackendPreviewRenderer implements PageLayoutViewDrawItemHookInterface
         $row = $this->databaseRowService->extendRow($row);
         if ((GeneralUtility::makeInstance(Features::class))->isFeatureEnabled('fluidBasedPageModule') === false) {
             $contentPreview = GeneralUtility::makeInstance(ContentPreview::class);
-            $content = $contentPreview->render($row);
+            $content = $contentPreview->renderLegacy($row);
             if ($content !== null) {
                 $itemContent .= $content;
                 $drawItem = false;
