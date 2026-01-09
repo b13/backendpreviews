@@ -45,9 +45,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'splitNL',
             'boolean',
-            'Split newlines. If this is true, splitChar is ignored.',
-            '',
-            false
+            'Split newlines. If this is true, splitChar is ignored.'
         );
     }
 
@@ -58,7 +56,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
         } else {
             $splitChar = $this->arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         }
-        $value = $this->arguments['value'] ?? $renderChildrenClosure();
+        $value = $this->arguments['value'] ?? $this->renderChildren();
         return explode($splitChar, (string)$value);
     }
 }

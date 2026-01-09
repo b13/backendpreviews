@@ -40,7 +40,7 @@ jobs:
       - name: Install composer dependencies TYPO3 12
         if: matrix.TYPO3 == '12'
         run: |
-          composer require typo3/cms-core:^12.4 --no-progress --no-interaction --dev -W
+          composer require typo3/cms-core:^12.4 typo3/cms-extbase:^12.4 --no-progress --no-interaction --dev -W
       - name: Phpcsfix
         run: .Build/bin/php-cs-fixer fix --config=Build/php-cs-fixer.php --dry-run --stop-on-violation --using-cache=no
       - name: Phpstan 13

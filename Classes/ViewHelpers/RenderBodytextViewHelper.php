@@ -35,8 +35,6 @@ class RenderBodytextViewHelper extends AbstractViewHelper
             'value',
             'string',
             'The input value. If not given, the evaluated child nodes will be used.',
-            false,
-            null
         );
         $this->registerArgument(
             'crop',
@@ -57,21 +55,13 @@ class RenderBodytextViewHelper extends AbstractViewHelper
         } else {
             $crop = $this->arguments['crop'] ?: self::DEFAULT_CROP_VALUE;
         }
-        $value = $this->arguments['value'];
+        $value = (string)($this->arguments['value'] ?? $this->renderChildren());
+        if ($value === '') {
+            return '';
+        }
         $keepTags = $this->arguments['keepTags'] ? explode(',', str_replace(' ', '', $this->arguments['keepTags'])): self::DEFAULT_KEEP_TAGS_LIST;
-        if ($value === null) {
-            $value = $renderChildrenClosure();
-        }
-
-        if ($value) {
-            $value = strip_tags($value, $keepTags);
-            $value = GeneralUtility::fixed_lgd_cs($value, $crop);
-            if ($keepTags !== null) {
-                return nl2br(trim($value));
-            }
-            return nl2br(htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8', false));
-        }
-
-        return '';
+        $value = strip_tags($value, $keepTags);
+        $value = GeneralUtility::fixed_lgd_cs($value, $crop);
+        return nl2br(trim($value));
     }
 }
