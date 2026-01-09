@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Instanceof between array and TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface will always evaluate to false\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Database\\\\Query\\\\QueryBuilder\\:\\:add\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/ViewHelpers/GetDatabaseRecordViewHelper.php

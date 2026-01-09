@@ -1,0 +1,8 @@
+includes:
+  - phpstan-baseline13.neon
+parameters:
+  level: 5
+  paths:
+    - %currentWorkingDirectory%/Classes
+  excludePaths:
+    - %currentWorkingDirectory%/Classes/Hooks/BackendPreviewRenderer.php

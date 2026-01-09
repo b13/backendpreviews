@@ -12,9 +12,7 @@ namespace B13\Backendpreviews\ViewHelpers;
  * of the License, or any later version.
  */
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Class ExplodeListViewHelper
@@ -47,9 +45,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'splitNL',
             'boolean',
-            'Split newlines. If this is true, splitChar is ignored.',
-            '',
-            false
+            'Split newlines. If this is true, splitChar is ignored.'
         );
     }
 
@@ -60,7 +56,7 @@ class ExplodeListViewHelper extends AbstractViewHelper
         } else {
             $splitChar = $this->arguments['splitChar'] ?? self::DEFAULT_SPLIT_CHAR;
         }
-        $value = $this->arguments['value'] ?? $renderChildrenClosure();
+        $value = $this->arguments['value'] ?? $this->renderChildren();
         return explode($splitChar, (string)$value);
     }
 }

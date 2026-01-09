@@ -1,0 +1,46 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Backend\\\\View\\\\PageLayoutContext\\:\\:getCurrentRequest\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method create\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\View\\\\ViewFactoryInterface\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method getPid\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method getRecordType\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\View\\\\ViewFactoryInterface not found\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\View\\\\ViewFactoryData not found\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Parameter \\$record of method B13\\\\Backendpreviews\\\\Backend\\\\Preview\\\\ContentPreview\\:\\:render\\(\\) has invalid type TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface not found\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
+
+		-
+			message: "#^Instanceof between array and TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface will always evaluate to false\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
