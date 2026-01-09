@@ -19,9 +19,7 @@ use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Class GetDatabaseRecordViewHelper
@@ -76,9 +74,9 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($uids, Connection::PARAM_INT_ARRAY))
             );
         if ((new Typo3Version())->getMajorVersion() > 12) {
-            $queryBuilder->getConcreteQueryBuilder()->addOrderBy('FIELD(uid,' . implode(',', $uids ) . ')');
+            $queryBuilder->getConcreteQueryBuilder()->addOrderBy('FIELD(uid,' . implode(',', $uids) . ')');
         } else {
-            $queryBuilder->add('orderBy', 'FIELD(uid,' . implode(',', $uids ) . ')');
+            $queryBuilder->add('orderBy', 'FIELD(uid,' . implode(',', $uids) . ')');
         }
         return $queryBuilder
             ->executeQuery()

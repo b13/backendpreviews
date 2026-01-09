@@ -23,7 +23,6 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 
 class ContentPreview
 {
-
     public function render(RecordInterface $record, PageLayoutContext $context): ?string
     {
         $previewConfiguration = BackendUtility::getPagesTSconfig($record->getPid())['mod.']['web_layout.']['tt_content.']['preview.'] ?? [];

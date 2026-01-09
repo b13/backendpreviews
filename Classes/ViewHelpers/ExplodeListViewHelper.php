@@ -12,9 +12,7 @@ namespace B13\Backendpreviews\ViewHelpers;
  * of the License, or any later version.
  */
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Class ExplodeListViewHelper
