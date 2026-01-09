@@ -1,0 +1,61 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to method assignMultiple\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method hasTemplate\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method render\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method setLayoutRootPaths\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method setPartialRootPaths\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method setTemplate\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Call to method setTemplateRootPaths\\(\\) on an unknown class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Fluid\\\\View\\\\StandaloneView not found\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/ContentPreview.php
+
+		-
+			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
+
+		-
+			message: "#^Parameter \\#1 \\$record of method TYPO3\\\\CMS\\\\Backend\\\\View\\\\Event\\\\PageContentPreviewRenderingEvent\\:\\:setRecord\\(\\) expects TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface, array given\\.$#"
+			count: 1
+			path: ../Classes/Listener/PageContentPreviewRendering.php
+
+		-
+			message: "#^Parameter \\#1 \\$row of method B13\\\\Backendpreviews\\\\Service\\\\DatabaseRowService\\:\\:extendRow\\(\\) expects array, TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface given\\.$#"
+			count: 1
+			path: ../Classes/Listener/PageContentPreviewRendering.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Database\\\\Query\\\\QueryBuilder\\:\\:add\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/ViewHelpers/GetDatabaseRecordViewHelper.php
