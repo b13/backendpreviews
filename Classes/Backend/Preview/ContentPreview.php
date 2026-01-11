@@ -12,6 +12,7 @@ namespace B13\Backendpreviews\Backend\Preview;
  * of the License, or any later version.
  */
 
+use B13\Backendpreviews\Service\DatabaseRowService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\PageLayoutContext;
 use TYPO3\CMS\Core\Domain\RecordInterface;
@@ -54,6 +55,9 @@ class ContentPreview
                 $context->getCurrentRequest()
             )
         );
+
+        $data = GeneralUtility::makeInstance(DatabaseRowService::class)->getAdditionalDataForView($record);
+        $view->assignMultiple($data);
         $view->assign('record', $record);
         try {
             return $view->render($fluidTemplateName);

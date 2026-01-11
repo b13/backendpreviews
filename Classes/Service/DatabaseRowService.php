@@ -15,6 +15,7 @@ namespace B13\Backendpreviews\Service;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
@@ -29,6 +30,33 @@ class DatabaseRowService implements SingletonInterface
     public function __construct(FileRepository $fileRepository)
     {
         $this->fileRepository = $fileRepository;
+    }
+
+    public function getAdditionalDataForView(RecordInterface $record): array
+    {
+        $data = [];
+        if ($this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record)) {
+            $urlParameters = [
+                'edit' => [
+                    'tt_content' => [
+                        $record->getUid() => 'edit',
+                    ],
+                ],
+                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI') . '#element-tt_content-' . $record->getUid(),
+            ];
+            $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+            $url = (string)$uriBuilder->buildUriFromRoute('record_edit', $urlParameters);
+            $return = [
+                'url' => $url,
+                'title' => htmlspecialchars($this->getLanguageService()->sL('LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')),
+            ];
+            $data['editLink'] = $return;
+        }
+
+        $data['CType-label'] = $this->getLanguageService()->sL(
+            BackendUtility::getLabelFromItemListMerged($record->getPid(), 'tt_content', 'CType', $record->get('CType'))
+        );
+        return $data;
     }
 
     public function extendRow(array $row): array
