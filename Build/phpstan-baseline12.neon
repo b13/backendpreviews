@@ -44,3 +44,37 @@ parameters:
 			message: "#^Instanceof between array and TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface will always evaluate to false\\.$#"
 			count: 1
 			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
+		-
+			message: "#^Call to method get\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Call to method getMainType\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 2
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Call to method getPid\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Call to method getRawRecord\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Call to method getUid\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 2
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Parameter \\#2 \\$idOrRow of method TYPO3\\\\CMS\\\\Core\\\\Authentication\\\\BackendUserAuthentication\\:\\:recordEditAccessInternals\\(\\) expects array\\|int, TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface given\\.$#"
+			count: 1
+			path: ../Classes/Service/DatabaseRowService.php
+
+		-
+			message: "#^Parameter \\$record of method B13\\\\Backendpreviews\\\\Service\\\\DatabaseRowService\\:\\:getAdditionalDataForView\\(\\) has invalid type TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
+			count: 1
+			path: ../Classes/Service/DatabaseRowService.php
