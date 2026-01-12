@@ -32,6 +32,7 @@ class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\Standard
         $record = $item->getRecord();
         $context = $item->getContext();
         $contentPreview = GeneralUtility::makeInstance(ContentPreview::class);
+        // note: this is only v14 s. https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/14.0/Breaking-92434-UseRecordAPIInPageModulePreviewRendering.html
         if ($record instanceof RecordInterface) {
             $content = $contentPreview->render($record, $context);
         } else {

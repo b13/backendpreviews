@@ -16,14 +16,14 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Domain\RecordInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Service\FlexFormService;
-use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class DatabaseRowService implements SingletonInterface
+class DatabaseRowService
 {
     protected FileRepository $fileRepository;
 
@@ -35,7 +35,12 @@ class DatabaseRowService implements SingletonInterface
     public function getAdditionalDataForView(RecordInterface $record): array
     {
         $data = [];
-        if ($this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record)) {
+        if ((new Typo3Version())->getMajorVersion() < 14) {
+            $editAccess = $this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record->getRawRecord()->toArray());
+        } else {
+            $editAccess = $this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record);
+        }
+        if ($editAccess) {
             $urlParameters = [
                 'edit' => [
                     'tt_content' => [
