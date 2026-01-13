@@ -16,6 +16,7 @@ use B13\Backendpreviews\Service\DatabaseRowService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\PageLayoutContext;
 use TYPO3\CMS\Core\Domain\RecordInterface;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
@@ -56,7 +57,8 @@ class ContentPreview
             )
         );
 
-        $data = GeneralUtility::makeInstance(DatabaseRowService::class)->getAdditionalDataForView($record);
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+        $data = GeneralUtility::makeInstance(DatabaseRowService::class, $fileRepository)->getAdditionalDataForView($record);
         $view->assignMultiple($data);
         $view->assign('record', $record);
         try {
