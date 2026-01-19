@@ -10,8 +10,11 @@
     <f:else if="{CType-label}">
         {CType-label}
     </f:else>
+    <f:else if="{record.CType}">
+			{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:CType.label')}: {record.CType -> f:format.case(mode: 'capital')}
+		</f:else>
     <f:else>
-        {f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:CType.label')}: {CType -> f:format.case(mode: 'capital')}
+			{f:translate(key: 'LLL:EXT:backendpreviews/Resources/Private/Language/locallang_db.xlf:CType.label')}: {CType -> f:format.case(mode: 'capital')}
     </f:else>
 </f:if>
 
