@@ -3,3 +3,7 @@ mod.web_layout.tt_content.preview.view {
   partialRootPaths.0 = EXT:backendpreviews/Resources/Private/Partials
   templateRootPaths.0 = EXT:backendpreviews/Resources/Private/Templates
 }
+
+[typo3.version < 14]
+    mod.web_layout.tt_content.preview.view.partialRootPaths.1 = EXT:backendpreviews/Resources/Private/PartialsLegacy
+[END]
