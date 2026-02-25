@@ -15,3 +15,7 @@ services:
       - name: event.listener
         event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
         identifier: 'b13-backendpreview-page-content-preview-rendering'
+  B13\Backendpreviews\Listener\BootCompleted:
+    tags:
+      - name: event.listener
+        identifier: 'b13-backendpreview-boot-completed'
