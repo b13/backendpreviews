@@ -13,3 +13,7 @@ parameters:
 			message: "#^Parameter \\#2 \\$row of method TYPO3\\\\CMS\\\\Core\\\\Authentication\\\\BackendUserAuthentication\\:\\:recordEditAccessInternals\\(\\) expects array, TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface given\\.$#"
 			count: 1
 			path: ../Classes/Service/DatabaseRowService.php
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Imaging\\\\IconProvider\\\\FontawesomeIconProvider not found\\.$#"
+			count: 2
+			path: ../Classes/Listener/BootCompleted.php

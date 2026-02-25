@@ -11,10 +11,7 @@ if ((\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Inform
 // if TYPO3 > 11 "$GLOBALS['TCA']['tt_content']['ctrl']['previewRenderer']" is always used for Backend-Preview-Rendering
 // extending the database row is handled by B13\Backendpreviews\Listener\PageContentPreviewRendering
 
-if (
-    (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class))->getMajorVersion() < 12 ||
-    (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Package\PackageManager::class)->isPackageActive('fontawesome_provider'))
-) {
+if ((new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion() < 12) {
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $iconRegistry->registerIcon(
         'exclamation-triangle',

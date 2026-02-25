@@ -78,3 +78,7 @@ parameters:
 			message: "#^Parameter \\$record of method B13\\\\Backendpreviews\\\\Service\\\\DatabaseRowService\\:\\:getAdditionalDataForView\\(\\) has invalid type TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
 			count: 1
 			path: ../Classes/Service/DatabaseRowService.php
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Imaging\\\\IconProvider\\\\FontawesomeIconProvider not found\\.$#"
+			count: 2
+			path: ../Classes/Listener/BootCompleted.php
