@@ -38,7 +38,7 @@ class DatabaseRowService
         if ((new Typo3Version())->getMajorVersion() < 14) {
             $editAccess = $this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record->getRawRecord()->toArray());
         } else {
-            $editAccess = $this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record);
+            $editAccess = $this->getBackendUser()->checkRecordEditAccess($record->getMainType(), $record);
         }
         if ($editAccess) {
             $urlParameters = [
