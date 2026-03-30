@@ -68,9 +68,8 @@ parameters:
 			message: "#^Call to method getUid\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface\\.$#"
 			count: 4
 			path: ../Classes/Service/DatabaseRowService.php
-
 		-
-			message: "#^Parameter \\#2 \\$idOrRow of method TYPO3\\\\CMS\\\\Core\\\\Authentication\\\\BackendUserAuthentication\\:\\:recordEditAccessInternals\\(\\) expects array\\|int, TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface given\\.$#"
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Authentication\\\\BackendUserAuthentication\\:\\:checkRecordEditAccess\\(\\)\\.$#"
 			count: 1
 			path: ../Classes/Service/DatabaseRowService.php
 
