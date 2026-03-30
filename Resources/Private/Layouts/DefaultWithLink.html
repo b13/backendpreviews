@@ -12,30 +12,64 @@
 	-->
 </f:comment>
 
-<a href="{editLink.url}" title="{editLink.title}">
-	<f:render section="Fulltype" optional="true">
-		<span class="b_title">
-			<f:render section="Type" optional="true">
-				<f:render partial="Defaults/CTypeLabel" arguments="{_all}"/>
+<f:if condition="{editLink.contextual}">
+	<f:then>
+		<typo3-backend-contextual-record-edit-trigger
+			url="{editLink.contextual}"
+			edit-url="{editLink.url}"
+			title="{editLink.title}"
+		>
+			<f:render section="Fulltype" optional="true">
+				<span class="b_title">
+					<f:render section="Type" optional="true">
+						<f:render partial="Defaults/CTypeLabel" arguments="{_all}"/>
+					</f:render>
+				</span><br>
 			</f:render>
-		</span><br>
-	</f:render>
-	<f:render section="Header" optional="true">
-		<f:render partial="Defaults/Header" arguments="{_all}" />
-	</f:render>
-	<f:render section="Subheader" optional="true">
-		<f:render partial="Defaults/Subheader" arguments="{_all}" />
-	</f:render>
-	<f:render section="Fullmain" optional="true">
-		<div class="b_content">
-			<f:render section="Main"/>
-			<f:render section="Link" optional="true">
-				<f:render partial="Link" arguments="{link: link, linklabel: linklabel, config: linkconfig}" />
+			<f:render section="Header" optional="true">
+				<f:render partial="Defaults/Header" arguments="{_all}" />
 			</f:render>
-		</div>
-	</f:render>
-	<f:render section="Warnings" optional="true"/>
-</a>
+			<f:render section="Subheader" optional="true">
+				<f:render partial="Defaults/Subheader" arguments="{_all}" />
+			</f:render>
+			<f:render section="Fullmain" optional="true">
+				<div class="b_content">
+					<f:render section="Main"/>
+					<f:render section="Link" optional="true">
+						<f:render partial="Link" arguments="{link: link, linklabel: linklabel, config: linkconfig}" />
+					</f:render>
+				</div>
+			</f:render>
+			<f:render section="Warnings" optional="true"/>
+		</typo3-backend-contextual-record-edit-trigger>
+	</f:then>
+	<f:else>
+		<a href="{editLink.url}" title="{editLink.title}">
+			<f:render section="Fulltype" optional="true">
+				<span class="b_title">
+					<f:render section="Type" optional="true">
+						<f:render partial="Defaults/CTypeLabel" arguments="{_all}"/>
+					</f:render>
+				</span><br>
+			</f:render>
+			<f:render section="Header" optional="true">
+				<f:render partial="Defaults/Header" arguments="{_all}" />
+			</f:render>
+			<f:render section="Subheader" optional="true">
+				<f:render partial="Defaults/Subheader" arguments="{_all}" />
+			</f:render>
+			<f:render section="Fullmain" optional="true">
+				<div class="b_content">
+					<f:render section="Main"/>
+					<f:render section="Link" optional="true">
+						<f:render partial="Link" arguments="{link: link, linklabel: linklabel, config: linkconfig}" />
+					</f:render>
+				</div>
+			</f:render>
+			<f:render section="Warnings" optional="true"/>
+		</a>
+	</f:else>
+</f:if>
 
 </html>
 

@@ -56,7 +56,7 @@ class ContentPreview
             )
         );
 
-        $data = GeneralUtility::makeInstance(DatabaseRowService::class)->getAdditionalDataForView($record);
+        $data = GeneralUtility::makeInstance(DatabaseRowService::class)->getAdditionalDataForView($record, $context);
         $view->assignMultiple($data);
         $view->assign('record', $record);
         try {
