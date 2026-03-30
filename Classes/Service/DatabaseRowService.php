@@ -14,6 +14,7 @@ namespace B13\Backendpreviews\Service;
 
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Backend\View\PageLayoutContext;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Information\Typo3Version;
@@ -32,7 +33,7 @@ class DatabaseRowService
         $this->fileRepository = $fileRepository;
     }
 
-    public function getAdditionalDataForView(RecordInterface $record): array
+    public function getAdditionalDataForView(RecordInterface $record, ?PageLayoutContext $context = null): array
     {
         $data = [];
         if ((new Typo3Version())->getMajorVersion() < 14) {
@@ -41,13 +42,22 @@ class DatabaseRowService
             $editAccess = $this->getBackendUser()->recordEditAccessInternals($record->getMainType(), $record);
         }
         if ($editAccess) {
+            if ($context === null) {
+                trigger_error('not passing context is deprecated', E_USER_DEPRECATED);
+            }
+            if ($context === null || (new Typo3Version())->getMajorVersion() < 13) {
+                $returnUrl = GeneralUtility::getIndpEnv('REQUEST_URI') . '#element-tt_content-' . $record->getUid();
+            } else {
+                $returnUrl = $context->getReturnUrl() . '#element-tt_content-' . $record->getUid();
+            }
+
             $urlParameters = [
                 'edit' => [
                     'tt_content' => [
                         $record->getUid() => 'edit',
                     ],
                 ],
-                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI') . '#element-tt_content-' . $record->getUid(),
+                'returnUrl' => $returnUrl,
             ];
             $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
             $url = (string)$uriBuilder->buildUriFromRoute('record_edit', $urlParameters);
@@ -55,6 +65,18 @@ class DatabaseRowService
                 'url' => $url,
                 'title' => htmlspecialchars($this->getLanguageService()->sL('LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:edit')),
             ];
+            if ((new Typo3Version())->getMajorVersion() > 13) {
+                $urlParameters = [
+                    'edit' => [
+                        'tt_content' => [
+                            $record->getUid() => 'edit',
+                        ],
+                    ],
+                    'module' => 'web_layout',
+                    'returnUrl' => $returnUrl,
+                ];
+                $return['contextual'] = (string)GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('record_edit_contextual', $urlParameters);
+            }
             $data['editLink'] = $return;
         }
 
