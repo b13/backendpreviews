@@ -6,7 +6,7 @@
     "typo3/cms": {
       "web-dir": ".Build/Web",
       "extension-key": "backendpreviews",
-      "version": "1.5.1",
+      "version": "1.5.2",
       "Package": {
         "providesPackages": {}
       }
