@@ -1,11 +1,15 @@
 {
   "name": "b13/backendpreviews",
   "type": "typo3-cms-extension",
-  "description": "Enhanced Fluid based backend element previews",
+  "description": "Enhanced Fluid based backend element previews - Adds full Fluid Templates/Layouts/Partials to backend element previews to enable consistent use of partials.",
   "extra": {
     "typo3/cms": {
       "web-dir": ".Build/Web",
-      "extension-key": "backendpreviews"
+      "extension-key": "backendpreviews",
+      "version": "1.5.1",
+      "Package": {
+        "providesPackages": {}
+      }
     }
   },
   "license": [
@@ -13,7 +17,7 @@
   ],
   "require": {
     "php": "^7.4 || ~8.0",
-    "typo3/cms-backend": "^10.4 || ^11.5 || ^12.4 || ^13.4 || ^14.0"
+    "typo3/cms-backend": "^10.4 || ^11.5 || ^12.4 || ^13.4 || ^14.3"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10",
