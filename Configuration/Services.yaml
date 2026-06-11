@@ -6,8 +6,6 @@ services:
 
   B13\Backendpreviews\:
     resource: '../Classes/*'
-  B13\Backendpreviews\Hooks\BackendPreviewRenderer:
-    public: true
   B13\Backendpreviews\Service\DatabaseRowService:
     public: true
   B13\Backendpreviews\Listener\PageContentPreviewRendering:
@@ -15,7 +13,3 @@ services:
       - name: event.listener
         event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
         identifier: 'b13-backendpreview-page-content-preview-rendering'
-  B13\Backendpreviews\Listener\BootCompleted:
-    tags:
-      - name: event.listener
-        identifier: 'b13-backendpreview-boot-completed'
