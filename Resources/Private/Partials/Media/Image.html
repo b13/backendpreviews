@@ -1,15 +1,33 @@
 <html
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
 <f:if condition="{image.uid}">
-	<f:image
-		src="{image.uid}" treatIdAsReference="1"
-		height="64"
-		class="b_image {f:if(condition: image.properties.hidden, then: 'b_image--hidden')}"
-		cropVariant="{cropVariant}"
-	/>
+	<f:if condition="{image.type} == 2">
+		<f:then>
+			<f:image
+				src="{image.uid}" treatIdAsReference="1"
+				height="64"
+				class="b_image {f:if(condition: image.properties.hidden, then: 'b_image--hidden')}"
+				cropVariant="{cropVariant}"
+			/>
+		</f:then>
+		<f:else>
+			<f:switch expression="{image.type}">
+				<f:case value="4"><f:variable name="iconIdentifier" value="mimetypes-media-video"/></f:case>
+				<f:case value="3"><f:variable name="iconIdentifier" value="mimetypes-media-audio"/></f:case>
+				<f:defaultCase><f:variable name="iconIdentifier" value="mimetypes-other-other"/></f:defaultCase>
+			</f:switch>
+			<span
+				class="b_image b_image--icon {f:if(condition: image.properties.hidden, then: 'b_image--hidden')}"
+				title="{image.name}"
+			>
+				<core:icon identifier="{iconIdentifier}" size="large"/>
+			</span>
+		</f:else>
+	</f:if>
 </f:if>
 
 </html>
