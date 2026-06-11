@@ -1,16 +1,10 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+			message: "#^Instanceof between array and TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface will always evaluate to false\\.$#"
 			count: 1
 			path: ../Classes/Backend/Preview/StandardContentPreviewRenderer.php
-
 		-
-			message: "#^Parameter \\#1 \\$record of method TYPO3\\\\CMS\\\\Backend\\\\View\\\\Event\\\\PageContentPreviewRenderingEvent\\:\\:setRecord\\(\\) expects TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface, array given\\.$#"
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Authentication\\\\BackendUserAuthentication\\:\\:checkRecordEditAccess\\(\\)\\.$#"
 			count: 1
-			path: ../Classes/Listener/PageContentPreviewRendering.php
-
-		-
-			message: "#^Parameter \\#1 \\$row of method B13\\\\Backendpreviews\\\\Service\\\\DatabaseRowService\\:\\:extendRow\\(\\) expects array, TYPO3\\\\CMS\\\\Core\\\\Domain\\\\RecordInterface given\\.$#"
-			count: 1
-			path: ../Classes/Listener/PageContentPreviewRendering.php
+			path: ../Classes/Service/DatabaseRowService.php
