@@ -47,6 +47,16 @@
 	margin-top: var(--spacing-image);
 }
 
+.b_image--icon {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.b_image--icon .icon {
+	width: 64px;
+	height: 64px;
+}
+
 .b_tiles {
 	width: var(--tiles-width-default);
 	display: inline-block;
