@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    name: Publish new version to TER
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP Version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: intl, mbstring, json, zip, curl
+          tools: composer:v2
+
+      - name: Determine version
+        id: get-version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Determine release comment
+        id: get-comment
+        run: |
+          comment="$(git tag -n99 -l "${{ steps.get-version.outputs.version }}" | sed 's/^[0-9.]*[ ]*//g')"
+          if [ -z "${comment}" ]; then
+            comment="Released version ${{ steps.get-version.outputs.version }} of ${{ github.event.repository.name }}"
+          fi
+          echo "comment=${comment}" >> "$GITHUB_OUTPUT"
+
+      - name: Install TYPO3 tailor
+        run: composer global require typo3/tailor --prefer-dist --no-progress
+
+      - name: Publish to TER
+        env:
+          TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
+        run: |
+          php ~/.composer/vendor/bin/tailor set-version "${{ steps.get-version.outputs.version }}" --no-docs
+          php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ steps.get-comment.outputs.comment }}" "${{ steps.get-version.outputs.version }}"
