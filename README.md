@@ -5,6 +5,11 @@
 This extension adds a hook for rendering content element previews for TYPO3's backend view in the page module,
 adding the ability to use Fluid Partials and Layouts to enable consistent preview markup.
 
+## Requirements
+
+* TYPO3 v10.4, v11.5, v12.4, v13.4 or v14
+* PHP 7.4 or higher
+
 ## Installation
 
 Use composer to add this content element to your project
@@ -19,6 +24,15 @@ Add this to your PageTsConfig to include the default Fluid Templates provided wi
 
 ```
 @import 'EXT:backendpreviews/Configuration/PageTs/PageTs.tsconfig'
+```
+
+On TYPO3 v13 and v14 you can alternatively include the shipped site set `b13/backendpreviews`
+as a dependency of your own site set (`Configuration/Sets/<YourSet>/settings.yaml`) instead of
+importing the PageTsConfig manually:
+
+```yaml
+dependencies:
+  - b13/backendpreviews
 ```
 
 You can add your own paths to the setup using PageTsConfig in your own site-extension:
@@ -61,6 +75,33 @@ remove the configuration for each of these CTypes in your extension's `ext_local
 ```
 unset($GLOBALS['TCA']['tt_content']['types']['textpic']['previewRenderer']);
 ```
+
+## ViewHelpers
+
+To make it easier to build your own preview templates, the extension ships a few ViewHelpers in the
+namespace `B13\Backendpreviews\ViewHelpers`. Register them in your template like this:
+
+```html
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:b13="http://typo3.org/ns/B13/Backendpreviews/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+```
+
+* `b13:renderBodytext` – prepares a `bodytext` value for a preview: strips tags (keeping `ol, ul, li`
+  by default), crops to a number of characters (`crop`, default `1500`, `0` disables cropping) and
+  converts newlines to `<br>`.
+
+  ```html
+  {text -> b13:renderBodytext(crop: 200) -> f:format.raw()}
+  ```
+
+* `b13:getDatabaseRecord` – fetches database record(s) by uid (or a comma-separated `uidList`) from a
+  table (`table`, default `tt_content`) so their fields can be used inside the preview.
+
+* `b13:explodeList` – splits a list value into an array you can iterate over with `f:for`, either by a
+  character (`splitChar`, default `,`) or by newlines (`splitNL`).
 
 ## License
 
