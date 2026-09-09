@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -45,7 +44,7 @@ class DatabaseRowService
             if ($context === null) {
                 trigger_error('not passing context is deprecated', E_USER_DEPRECATED);
             }
-            if ($context === null || (new Typo3Version())->getMajorVersion() < 13) {
+            if ($context === null) {
                 $returnUrl = GeneralUtility::getIndpEnv('REQUEST_URI') . '#element-tt_content-' . $record->getUid();
             } else {
                 $returnUrl = $context->getReturnUrl() . '#element-tt_content-' . $record->getUid();
@@ -131,7 +130,6 @@ class DatabaseRowService
             }
             if ($row[$fieldName] ?? false) {
                 $row['all' . $variableName] = $this->fileRepository->findByRelation('tt_content', $fieldName, $row['uid']);
-                $row['all' . $variableName . '-visible'] = $this->countVisibleFileReferences($row['all' . $variableName]);
             }
         }
         return $row;
@@ -145,17 +143,5 @@ class DatabaseRowService
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
-    }
-
-    protected function countVisibleFileReferences(array $references): int
-    {
-        $cnt = 0;
-        /** @var FileReference $reference */
-        foreach ($references as $reference) {
-            if ((int)$reference->getProperty('hidden') === 0) {
-                $cnt++;
-            }
-        }
-        return $cnt;
     }
 }

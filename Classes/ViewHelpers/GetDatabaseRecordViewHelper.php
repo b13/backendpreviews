@@ -72,7 +72,12 @@ class GetDatabaseRecordViewHelper extends AbstractViewHelper
             ->where(
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($uids, Connection::PARAM_INT_ARRAY))
             );
-        $queryBuilder->getConcreteQueryBuilder()->addOrderBy('FIELD(uid,' . implode(',', $uids) . ')');
+        $orderByCase = 'CASE ' . $queryBuilder->quoteIdentifier('uid');
+        foreach (array_values($uids) as $position => $uid) {
+            $orderByCase .= ' WHEN ' . $uid . ' THEN ' . $position;
+        }
+        $orderByCase .= ' END';
+        $queryBuilder->getConcreteQueryBuilder()->addOrderBy($orderByCase);
         return $queryBuilder
             ->executeQuery()
             ->fetchAllAssociative();
