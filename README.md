@@ -1,34 +1,36 @@
 # Nice Backend Previews for Content Elements in TYPO3
 
-## About this extension
+## About This Extension
 
-This extension adds a hook for rendering content element previews for TYPO3's backend view in the page module,
-adding the ability to use Fluid Partials and Layouts to enable consistent preview markup.
+This extension takes over the preview rendering for content elements in TYPO3's page module,
+adding the ability to use Fluid templates, layouts, and partials to enable consistent preview markup.
 
 ## Requirements
 
-* TYPO3 v10.4, v11.5, v12.4, v13.4 or v14
-* PHP 7.4 or higher
+* TYPO3 v13.4 or v14
+* PHP 8.2 or higher
+
+Version 2.0 dropped support for TYPO3 v10.4, v11.5, and v12.4 together with the compatibility layer
+for those versions. If you are still on one of them, stay on the 1.5 releases.
 
 ## Installation
 
-Use composer to add this content element to your project
+Use composer to add this extension to your project
 
 `composer require b13/backendpreviews`
 
-and install the extension using the Extension Manager in your TYPO3 backend.
+and set it up with `vendor/bin/typo3 extension:setup`.
 
-## Add configuration
+## Add Configuration
 
-Add this to your PageTsConfig to include the default Fluid Templates provided with this extension:
+Add this to your PageTsConfig to include the default Fluid templates provided with this extension:
 
 ```
 @import 'EXT:backendpreviews/Configuration/PageTs/PageTs.tsconfig'
 ```
 
-On TYPO3 v13 and v14 you can alternatively include the shipped site set `b13/backendpreviews`
-as a dependency of your own site set (`Configuration/Sets/<YourSet>/settings.yaml`) instead of
-importing the PageTsConfig manually:
+Alternatively, include the shipped site set `b13/backendpreviews` as a dependency of your own site
+set (`Configuration/Sets/<YourSet>/config.yaml`) instead of importing the PageTsConfig manually:
 
 ```yaml
 dependencies:
@@ -55,25 +57,57 @@ You can set a different templateName explicitly like this:
 mod.web_layout.tt_content.preview.template.mytype = Myowntemplate
 ```
 
-For plugins a template name for a specific plugin can be specified like this:
+## What Your Template Gets
+
+TYPO3 v14 hands the content element to a preview renderer as a record object, while v13 still passes
+a plain array (see [Breaking-92434](https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/14.0/Breaking-92434-UseRecordAPIInPageModulePreviewRendering.html)).
+The variables in your preview template therefore differ between the two versions.
+
+On **both** versions:
+
+* `{editLink.url}` and `{editLink.title}` – the edit link for the element, if the user may edit it.
+  On v14 there is also `{editLink.contextual}`, used by the shipped layouts to render a
+  `typo3-backend-contextual-record-edit-trigger`.
+* `{CType-label}` – the resolved label of the element's CType.
+
+On **v14** only:
+
+* `{record}` – the element itself, so its fields are read as `{record.header}`, `{record.bodytext}`,
+  and so on.
+
+On **v13** only:
+
+* All fields of the `tt_content` row directly, so `{header}`, `{bodytext}`, and so on.
+* `{list_type-label}` – the resolved plugin label for elements with CType `list`.
+* `{pi_flexform_transformed}` – all flexform data of the plugin as an array, to create meaningful
+  previews:
+
+  ```
+  <b>Page:</b> {pi_flexform_transformed.settings.page}
+  ```
+
+* `{allImages}`, and `{all<Fieldname>}` for every other TCA field of type `file` – the file
+  references of that field, ready to be passed into the `Images` partial.
+* A template name for a specific plugin can be specified like this:
+
+  ```
+  mod.web_layout.tt_content.preview.template.list.mylist_type = Listtypetemplate
+  ```
+
+The shipped layouts and partials cover both cases, so a template built on top of them keeps working
+on either version.
+
+## Use Custom Backend Previews for Default CTypes
+
+This extension registers its preview renderer for the whole `tt_content` table. A renderer that is
+registered for a single type wins over that, so an element whose type brings its own
+`previewRenderer` is not rendered by this extension. The CTypes of `fluid_styled_content` no longer
+register one, but other extensions still do—`EXT:form`, for instance, for `form_formframework`.
+To use `EXT:backendpreviews` for such a type, remove that configuration in your own extension's
+`Configuration/TCA/Overrides/tt_content.php`:
 
 ```
-mod.web_layout.tt_content.preview.template.list.mylist_type = Listtypetemplate
-```
-
-All flexform data of the plugin are available in `{pi_flexform_transformed}` to create meaningful previews:
-
-```
-<b>Page:</b> {pi_flexform_transformed.settings.page}
-```
-
-## Use custom backend previews for default CTypes
-
-Default CTypes for `fluid_styled_content` define dedicated `previewRenderer` classes. If you want to use `EXT:backendpreviews` instead,
-remove the configuration for each of these CTypes in your extension's `ext_localconf.php`:
-
-```
-unset($GLOBALS['TCA']['tt_content']['types']['textpic']['previewRenderer']);
+unset($GLOBALS['TCA']['tt_content']['types']['form_formframework']['previewRenderer']);
 ```
 
 ## ViewHelpers
@@ -105,13 +139,15 @@ namespace `B13\Backendpreviews\ViewHelpers`. Register them in your template like
 
 ## License
 
-As TYPO3 Core, _backendpreviews_ is licensed under GPL2 or later. See the LICENSE file for more details.
+As TYPO3 Core, _backendpreviews_ is licensed under GPL-2.0-or-later. See the [LICENSE](LICENSE) file
+for more details.
 
-## Background, Authors & Further Maintenance
+## Credits
 
-`EXT:backendpreviews` was initially created by David Steeb in 2021 for [b13, Stuttgart](https://b13.com). We use this as
-a basis to add consistent previews for our custom content element types.
+`EXT:backendpreviews` was created by David Steeb and is maintained by [b13 GmbH](https://b13.com),
+Stuttgart, Germany. We use it as a basis to add consistent previews for our custom content element
+types.
 
-[Find more TYPO3 extensions we have developed](https://b13.com/useful-typo3-extensions-from-b13-to-you) that help us
-deliver value in client projects. As part of the way we work, we focus on testing and best practices to ensure long-term
-performance, reliability, and results in all our code.
+[Find more TYPO3 extensions we have developed](https://b13.com/useful-typo3-extensions-from-b13-to-you?utm_source=backendpreviews&utm_medium=readme)
+that help us deliver value in client projects. As part of our work, we focus on testing and best
+practices to ensure long-term performance, reliability, and results in all our code.
