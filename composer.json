@@ -15,6 +15,18 @@
   "license": [
     "GPL-2.0-or-later"
   ],
+  "authors": [
+    {
+      "name": "b13 GmbH",
+      "email": "typo3@b13.com",
+      "homepage": "https://b13.com"
+    }
+  ],
+  "homepage": "https://b13.com",
+  "support": {
+    "issues": "https://github.com/b13/backendpreviews/issues",
+    "source": "https://github.com/b13/backendpreviews"
+  },
   "require": {
     "php": "^8.2",
     "typo3/cms-backend": "^13.4 || ^14.3"
