@@ -13,6 +13,8 @@ adding the ability to use Fluid templates, layouts, and partials to enable consi
 Version 2.0 dropped support for TYPO3 v10.4, v11.5, and v12.4 together with the compatibility layer
 for those versions. If you are still on one of them, stay on the 1.5 releases.
 
+Release notes live in [CHANGELOG.md](CHANGELOG.md).
+
 ## Installation
 
 Use composer to add this extension to your project
@@ -60,42 +62,52 @@ mod.web_layout.tt_content.preview.template.mytype = Myowntemplate
 ## What Your Template Gets
 
 TYPO3 v14 hands the content element to a preview renderer as a record object, while v13 still passes
-a plain array (see [Breaking-92434](https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/14.0/Breaking-92434-UseRecordAPIInPageModulePreviewRendering.html)).
-The variables in your preview template therefore differ between the two versions.
+a plain array (see
+[Breaking-92434](https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/14.0/Breaking-92434-UseRecordAPIInPageModulePreviewRendering.html),
+which is also the migration guide for your own templates). The variables in a preview template
+therefore differ between the two versions.
 
-On **both** versions:
+On **v14**, everything from the element itself hangs off a single `{record}`:
 
-* `{editLink.url}` and `{editLink.title}` – the edit link for the element, if the user may edit it.
-  On v14 there is also `{editLink.contextual}`, used by the shipped layouts to render a
-  `typo3-backend-contextual-record-edit-trigger`.
-* `{CType-label}` – the resolved label of the element's CType.
+```html
+<h2>{record.header}</h2>
+<p>{record.bodytext}</p>
+<f:if condition="{record.image}">Image UID: {record.image.uid}</f:if>
+<small>{record.pi_flexform.sheets.s_messages.settings.welcome_header}</small>
+```
 
-On **v14** only:
+Relations are already resolved on that object, and flexform values come as a `FlexFormFieldValues`
+object grouped by sheet.
 
-* `{record}` – the element itself, so its fields are read as `{record.header}`, `{record.bodytext}`,
-  and so on.
+On **v13**, the fields of the `tt_content` row are assigned individually, so the same template reads
+`{header}`, `{bodytext}`, and `{image}`. This extension adds three things that only exist on that
+version, because v14 covers them through the record:
 
-On **v13** only:
-
-* All fields of the `tt_content` row directly, so `{header}`, `{bodytext}`, and so on.
-* `{list_type-label}` – the resolved plugin label for elements with CType `list`.
-* `{pi_flexform_transformed}` – all flexform data of the plugin as an array, to create meaningful
-  previews:
+* `{pi_flexform_transformed}` – all flexform data of the plugin as a flat array:
 
   ```
   <b>Page:</b> {pi_flexform_transformed.settings.page}
   ```
 
 * `{allImages}`, and `{all<Fieldname>}` for every other TCA field of type `file` – the file
-  references of that field, ready to be passed into the `Images` partial.
-* A template name for a specific plugin can be specified like this:
+  references of that field, which is what the shipped `Images` partial expects.
+* `{list_type-label}`, plus a template name per plugin for elements with CType `list`:
 
   ```
   mod.web_layout.tt_content.preview.template.list.mylist_type = Listtypetemplate
   ```
 
-The shipped layouts and partials cover both cases, so a template built on top of them keeps working
-on either version.
+  There is no v14 counterpart—`list_type` is gone from the core.
+
+On **both** versions this extension assigns:
+
+* `{editLink.url}` and `{editLink.title}` – the edit link for the element, if the user may edit it.
+  On v14 there is also `{editLink.contextual}`, which the shipped layouts use to render a
+  `typo3-backend-contextual-record-edit-trigger`.
+* `{CType-label}` – the resolved label of the element's CType.
+
+If your templates build on the shipped layouts and partials, the version switch is handled there.
+A template that reads element fields directly needs both spellings to work on v13 and v14.
 
 ## Use Custom Backend Previews for Default CTypes
 
@@ -136,6 +148,11 @@ namespace `B13\Backendpreviews\ViewHelpers`. Register them in your template like
 
 * `b13:explodeList` – splits a list value into an array you can iterate over with `f:for`, either by a
   character (`splitChar`, default `,`) or by newlines (`splitNL`).
+
+## Security
+
+Please report security issues to [security@b13.com](mailto:security@b13.com). See
+[SECURITY.md](SECURITY.md) for the reporting process and what to expect.
 
 ## License
 
