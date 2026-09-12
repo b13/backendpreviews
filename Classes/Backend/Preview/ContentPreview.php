@@ -19,43 +19,23 @@ use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\View\ViewInterface;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 
 class ContentPreview
 {
     public function render(RecordInterface $record, PageLayoutContext $context): ?string
     {
-        $previewConfiguration = BackendUtility::getPagesTSconfig($record->getPid())['mod.']['web_layout.']['tt_content.']['preview.'] ?? [];
-        if (!$previewConfiguration) {
-            // Early return in case no preview configuration can be found
+        $previewConfiguration = $this->getPreviewConfiguration((int)$record->getPid());
+        if ($previewConfiguration === null) {
             return null;
         }
 
-        $fluidConfiguration = $previewConfiguration['view.'] ?? [];
-        if (!$fluidConfiguration) {
-            // Early return in case no fluid template configuration can be found
-            return null;
-        }
-
-        $templateConfiguration = $previewConfiguration['template.'] ?? [];
         $cType = $record->getRecordType();
-        if (!empty($templateConfiguration[$cType])) {
-            $fluidTemplateName = $templateConfiguration[$cType];
-        } else {
-            $fluidTemplateName = $cType;
-        }
-        $viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
-        $view = $viewFactory->create(
-            new ViewFactoryData(
-                $fluidConfiguration['templateRootPaths.'] ?? null,
-                $fluidConfiguration['partialRootPaths.'] ?? null,
-                $fluidConfiguration['layoutRootPaths.'] ?? null,
-                null,
-                $context->getCurrentRequest()
-            )
-        );
+        $templateConfiguration = $previewConfiguration['template.'] ?? [];
+        $fluidTemplateName = !empty($templateConfiguration[$cType]) ? $templateConfiguration[$cType] : $cType;
 
+        $view = $this->createView($previewConfiguration['view.'], $context);
         $data = GeneralUtility::makeInstance(DatabaseRowService::class)->getAdditionalDataForView($record, $context);
         $view->assignMultiple($data);
         $view->assign('record', $record);
@@ -66,17 +46,16 @@ class ContentPreview
         return null;
     }
 
-    public function renderLegacy(array $row): ?string
+    /**
+     * Render path for TYPO3 v13, where the page module still passes the content element as an array
+     * instead of a RecordInterface (see Breaking-92434).
+     *
+     * @param array<string, mixed> $row
+     */
+    public function renderLegacy(array $row, PageLayoutContext $context): ?string
     {
-        $previewConfiguration = BackendUtility::getPagesTSconfig($row['pid'])['mod.']['web_layout.']['tt_content.']['preview.'] ?? [];
-        if (!$previewConfiguration) {
-            // Early return in case no preview configuration can be found
-            return null;
-        }
-
-        $fluidConfiguration = $previewConfiguration['view.'] ?? [];
-        if (!$fluidConfiguration) {
-            // Early return in case no fluid template configuration can be found
+        $previewConfiguration = $this->getPreviewConfiguration((int)$row['pid']);
+        if ($previewConfiguration === null) {
             return null;
         }
 
@@ -89,16 +68,42 @@ class ContentPreview
             $fluidTemplateName = $row['CType'];
         }
 
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setLayoutRootPaths($fluidConfiguration['layoutRootPaths.'] ?? []);
-        $view->setPartialRootPaths($fluidConfiguration['partialRootPaths.'] ?? []);
-        $view->setTemplateRootPaths($fluidConfiguration['templateRootPaths.'] ?? []);
-        $view->setTemplate($fluidTemplateName);
+        $view = $this->createView($previewConfiguration['view.'], $context);
         $view->assignMultiple($row);
-
-        if ($view->hasTemplate()) {
-            return $view->render();
+        try {
+            return $view->render($fluidTemplateName);
+        } catch (InvalidTemplateResourceException) {
         }
         return null;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    protected function getPreviewConfiguration(int $pid): ?array
+    {
+        $previewConfiguration = BackendUtility::getPagesTSconfig($pid)['mod.']['web_layout.']['tt_content.']['preview.'] ?? [];
+        // Early return in case no preview (or fluid template) configuration can be found
+        if (!$previewConfiguration || empty($previewConfiguration['view.'])) {
+            return null;
+        }
+        return $previewConfiguration;
+    }
+
+    /**
+     * @param array<string, mixed> $fluidConfiguration
+     */
+    protected function createView(array $fluidConfiguration, PageLayoutContext $context): ViewInterface
+    {
+        $viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
+        return $viewFactory->create(
+            new ViewFactoryData(
+                $fluidConfiguration['templateRootPaths.'] ?? null,
+                $fluidConfiguration['partialRootPaths.'] ?? null,
+                $fluidConfiguration['layoutRootPaths.'] ?? null,
+                null,
+                $context->getCurrentRequest()
+            )
+        );
     }
 }

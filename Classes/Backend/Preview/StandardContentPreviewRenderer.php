@@ -36,7 +36,7 @@ class StandardContentPreviewRenderer extends \TYPO3\CMS\Backend\Preview\Standard
         if ($record instanceof RecordInterface) {
             $content = $contentPreview->render($record, $context);
         } else {
-            $content = $contentPreview->renderLegacy($record);
+            $content = $contentPreview->renderLegacy($record, $context);
         }
         if ($content !== null) {
             return $content;

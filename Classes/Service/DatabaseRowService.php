@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Domain\RecordInterface;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -45,7 +44,7 @@ class DatabaseRowService
             if ($context === null) {
                 trigger_error('not passing context is deprecated', E_USER_DEPRECATED);
             }
-            if ($context === null || (new Typo3Version())->getMajorVersion() < 13) {
+            if ($context === null) {
                 $returnUrl = GeneralUtility::getIndpEnv('REQUEST_URI') . '#element-tt_content-' . $record->getUid();
             } else {
                 $returnUrl = $context->getReturnUrl() . '#element-tt_content-' . $record->getUid();
@@ -120,38 +119,17 @@ class DatabaseRowService
             $row['pi_flexform_transformed'] = $flexFormService->convertFlexFormContentToArray($row['pi_flexform']);
         }
 
-        // return all sys_file_reference rows
-        // automatic resolving of all type=file, only works with TYPO3 v12+
-        $foundOne = false;
+        // return all sys_file_reference rows by automatically resolving all type=file fields
         foreach ($GLOBALS['TCA']['tt_content']['columns'] as $fieldName => $fieldConfig) {
-            if ($fieldConfig['config']['type'] === 'file') {
-                $variableName = GeneralUtility::underscoredToUpperCamelCase($fieldName);
-                if ($fieldName === 'image') {
-                    $variableName = 'Images';
-                }
-                if ($row[$fieldName] ?? false) {
-                    $row['all' . $variableName] = $this->fileRepository->findByRelation('tt_content', $fieldName, $row['uid']);
-                    $row['all' . $variableName . '-visible'] = $this->countVisibleFileReferences($row['all' . $variableName]);
-                }
-                $foundOne = true;
+            if (($fieldConfig['config']['type'] ?? '') !== 'file') {
+                continue;
             }
-        }
-        if (!$foundOne) {
-            if ($row['assets'] ?? false) {
-                $row['allAssets'] = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
-                $row['allAssets-visible'] = $this->countVisibleFileReferences($row['allAssets']);
+            $variableName = GeneralUtility::underscoredToUpperCamelCase($fieldName);
+            if ($fieldName === 'image') {
+                $variableName = 'Images';
             }
-            if ($row['assets2'] ?? false) {
-                $row['allAssets2'] = $this->fileRepository->findByRelation('tt_content', 'assets2', $row['uid']);
-                $row['allAssets2-visible'] = $this->countVisibleFileReferences($row['allAssets2']);
-            }
-            if ($row['media'] ?? false) {
-                $row['allMedia'] = $this->fileRepository->findByRelation('tt_content', 'media', $row['uid']);
-                $row['allMedia-visible'] = $this->countVisibleFileReferences($row['allMedia']);
-            }
-            if ($row['image'] ?? false) {
-                $row['allImages'] = $this->fileRepository->findByRelation('tt_content', 'image', $row['uid']);
-                $row['allImages-visible'] = $this->countVisibleFileReferences($row['allImages']);
+            if ($row[$fieldName] ?? false) {
+                $row['all' . $variableName] = $this->fileRepository->findByRelation('tt_content', $fieldName, $row['uid']);
             }
         }
         return $row;
@@ -165,17 +143,5 @@ class DatabaseRowService
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
-    }
-
-    protected function countVisibleFileReferences(array $references): int
-    {
-        $cnt = 0;
-        /** @var FileReference $reference */
-        foreach ($references as $reference) {
-            if ((int)$reference->getProperty('hidden') === 0) {
-                $cnt++;
-            }
-        }
-        return $cnt;
     }
 }

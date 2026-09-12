@@ -3,16 +3,16 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Enhanced Fluid based backend element previews',
     'description' => 'Adds full Fluid Templates/Layouts/Partials to backend element previews to enable consistent use of partials.',
-    'category' => 'fe',
-    'author' => 'David Steeb',
+    'category' => 'be',
+    'author' => 'b13 GmbH',
     'author_email' => 'typo3@b13.com',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
     'author_company' => 'b13 GmbH, Stuttgart',
-    'version' => '1.5.3',
+    'version' => '2.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-14.99.99',
+            'typo3' => '13.4.0-14.99.99',
         ],
     ],
 ];
