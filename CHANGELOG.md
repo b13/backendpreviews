@@ -30,6 +30,14 @@ This section becomes 2.0.0 when the release is tagged.
 
 ### Changed
 
+- **Shipped partials sanitize their HTML output.** `Text`, `Listgroup`, and
+  `Media/ImageTile` now use `f:sanitize.html()` instead of `f:format.raw()`, so
+  markup passed in as `content` (or kept via `keepTags`) goes through TYPO3's
+  `default` HTML sanitizer preset. Markup outside its allow list is removed:
+  custom elements, form elements, `iframe`, `script`, and `on*` attributes.
+  Unknown tags are shown escaped. Text cropped in the middle of a list no longer
+  leaves unclosed tags behind. If your previews rely on such markup, override
+  the partial or configure a sanitizer preset (see README).
 - **Both render paths use `ViewFactoryInterface`.** `StandaloneView`, which is
   removed in TYPO3 v14, is no longer referenced anywhere. Preview templates are
   unaffected; the same templates, layouts, and partials keep rendering.

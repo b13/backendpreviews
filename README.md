@@ -140,14 +140,28 @@ namespace `B13\Backendpreviews\ViewHelpers`. Register them in your template like
   converts newlines to `<br>`.
 
   ```html
-  {text -> b13:renderBodytext(crop: 200) -> f:format.raw()}
+  {text -> b13:renderBodytext(crop: 200) -> f:sanitize.html()}
   ```
+
+  The output is HTML, so pass it through `f:sanitize.html()` rather than `f:format.raw()`: the shipped
+  partials do the same.
 
 * `b13:getDatabaseRecord` – fetches database record(s) by uid (or a comma-separated `uidList`) from a
   table (`table`, default `tt_content`) so their fields can be used inside the preview.
 
 * `b13:explodeList` – splits a list value into an array you can iterate over with `f:for`, either by a
   character (`splitChar`, default `,`) or by newlines (`splitNL`).
+
+## HTML Sanitizing in the Shipped Partials
+
+The partials `Text`, `Listgroup` and `Media/ImageTile` output their HTML through `f:sanitize.html()`,
+which uses TYPO3's `default` HTML sanitizer preset. Tags and attributes outside that allow list are
+removed, and unknown tags (for example custom elements like `<my-component>`) are shown escaped as
+text. That includes form elements, `iframe`, `script` and event handler attributes such as `onclick`.
+
+If your preview markup needs more than that, register your own sanitizer builder for the `default`
+preset, or override the partial in your own `partialRootPaths` and pick a different preset with
+`f:sanitize.html(build: 'my-preset')`.
 
 ## Security
 
