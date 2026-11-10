@@ -50,11 +50,9 @@ class RenderBodytextViewHelper extends AbstractViewHelper
 
     public function render()
     {
-        if (($this->arguments['crop'] ?? 0) === 0) {
-            $crop = 0;
-        } else {
-            $crop = $this->arguments['crop'] ?: self::DEFAULT_CROP_VALUE;
-        }
+        // An omitted argument (e.g. "crop: crop" with an undefined variable) uses the default, only 0 disables cropping
+        $crop = $this->arguments['crop'] ?? '';
+        $crop = $crop === '' ? self::DEFAULT_CROP_VALUE : (int)$crop;
         $value = (string)($this->arguments['value'] ?? $this->renderChildren());
         if ($value === '') {
             return '';

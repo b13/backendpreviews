@@ -5,6 +5,19 @@ All notable changes to `b13/backendpreviews` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Link fields whose value contains a space are shown completely again.**
+  `Partials/Link.html` passed `link.url` to `f:uri.typolink`, which splits the
+  parameter at spaces: `"tel:+49 365 828-2941"` was shown as `(tel:+49)`. The
+  partial now passes the `TypolinkParameter` itself.
+- **`b13:renderBodytext` crops to 1500 characters by default again.** Since
+  2.0.0 an omitted `crop` argument disabled cropping, so `Partials/Text.html`
+  (which passes `crop: crop`) showed long texts in full. Only an explicit
+  `crop: 0` disables cropping now.
+
 ## [2.0.0] — 2026-09-24
 
 ### Removed
